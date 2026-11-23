@@ -4,54 +4,42 @@
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Arte Net Store | متجر أرتي نت</title>
 <style>
-:root{--bg:#151515;--panel:#202020;--panel2:#292929;--line:#363636;--txt:#f4f4f4;--muted:#bdbdbd;--orange:#f28a32}
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--txt);font-family:Tahoma,Arial,sans-serif}
-header{position:sticky;top:0;z-index:5;background:#191919;border-bottom:1px solid var(--line);padding:14px 5%;display:flex;align-items:center;justify-content:space-between;gap:12px}
-.brand{font-size:21px;font-weight:800;direction:ltr}.brand small{display:block;direction:rtl;text-align:right;color:var(--muted);font-size:12px;font-weight:400;margin-top:4px}
-button,input,select,textarea{font:inherit}
-button{border:0;border-radius:7px;padding:10px 14px;background:var(--orange);color:#171717;font-weight:700;cursor:pointer}
-button.secondary{background:#292929;border:1px solid #444;color:var(--txt)}
-button.danger{background:#702b2b;color:#fff}
-.wrap{max-width:1120px;margin:auto;padding:22px 5%}
-.hero{padding:28px 0 24px;border:0;border-bottom:1px solid var(--line);border-radius:0;background:transparent;display:block}
-h1{font-size:clamp(24px,4vw,34px);margin:0 0 10px;color:#f4a45d}
-.hero p,.muted{color:var(--muted);line-height:1.8}
-.hero-art{display:none}
-.toolbar{display:flex;gap:9px;flex-wrap:wrap;margin:20px 0 12px}
-.field{background:#202020;border:1px solid #444;color:var(--txt);padding:11px 12px;border-radius:7px;min-width:0}
+:root{--bg:#101316;--panel:#171b1f;--panel2:#20262b;--line:#424950;--txt:#f7f7f7;--muted:#c4c9ce;--orange:#f58220}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--txt);font-family:Tahoma,Arial,sans-serif}
+header{position:sticky;top:0;z-index:5;background:#111519;border-bottom:1px solid #343a40;padding:13px 4%;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brand{font-size:23px;font-weight:800;direction:ltr;text-align:right}.brand small{display:block;direction:rtl;color:var(--muted);font-size:13px;font-weight:400;margin-top:5px}
+.header-actions{display:flex;gap:8px;align-items:center}
+button,input,select,textarea{font:inherit}button{border:1px solid transparent;border-radius:9px;padding:11px 15px;background:var(--orange);color:#171717;font-weight:700;cursor:pointer}
+button.secondary{background:#202428;border:1px solid #454c53;color:var(--txt)}button.danger{background:#702b2b;color:#fff}
+.wrap{max-width:1160px;margin:auto;padding:24px 4%}
+.hero{padding:32px 0 28px;border:0;border-bottom:1px solid #3b4248;border-radius:0;background:transparent;display:block;text-align:center}
+h1{font-size:clamp(25px,4vw,38px);margin:0 0 14px;color:#f7a45d}.hero p,.muted{color:var(--muted);line-height:1.85}
+.hero button{margin-top:10px;padding:14px 24px;font-size:17px}
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;margin:24px 0 12px}
+.field{background:#202428;border:1px solid #454c53;color:var(--txt);padding:13px;border-radius:9px;min-width:0}
 .toolbar input{flex:1;min-width:180px}
-.cats{display:flex;gap:8px;overflow:auto;padding:8px 0 15px}
-.cats button{white-space:nowrap}
-.cats button.active{background:var(--orange);color:#171717;outline:0}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(205px,1fr));gap:12px}
-.card{background:var(--panel);border:1px solid var(--line);border-radius:9px;overflow:hidden}
-.product-img{height:132px;background:#292929;display:grid;place-items:center;font-size:48px}
-.cardbody{padding:13px}
-.card h3{margin:0 0 7px;font-size:16px}
-.price{color:#ffad61;font-size:19px;font-weight:800;white-space:nowrap}
-.tag{font-size:11px;color:#e8b98f;background:#34271d;padding:4px 7px;border-radius:4px;display:inline-block;margin-bottom:8px}
+.cats{display:flex;gap:10px;overflow-x:auto;padding:8px 0 16px;scrollbar-width:thin}
+.cats button{white-space:nowrap;padding:13px 18px;font-size:16px}.cats button.active{background:var(--orange);color:#171717}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.card{background:linear-gradient(145deg,#1a2025,#14191d);border:1px solid #48515a;border-radius:15px;overflow:hidden}
+.product-img{height:190px;background:linear-gradient(145deg,#252b31,#151a1f);display:grid;place-items:center;font-size:76px}
+.cardbody{padding:15px}.card h3{margin:4px 0 8px;font-size:18px}
+.price{color:#ff922e;font-size:23px;font-weight:800;white-space:nowrap}
+.tag{font-size:11px;color:#f4c49c;background:#38291d;padding:5px 8px;border-radius:5px;display:inline-block;margin-bottom:8px}
 .row{display:flex;justify-content:space-between;align-items:center;gap:8px}
-.section-title{margin:25px 0 12px;color:#f4a45d;font-size:21px}
-.panel{background:var(--panel);border:1px solid var(--line);padding:16px;border-radius:9px;margin:13px 0}
+.section-title{margin:25px 0 12px;color:#f6a15b;font-size:24px}
+.panel{background:var(--panel);border:1px solid var(--line);padding:16px;border-radius:12px;margin:13px 0}
 footer{border-top:1px solid var(--line);padding:22px 5%;color:var(--muted);text-align:center;margin-top:35px}
-.modal{position:fixed;inset:0;background:#000b;display:none;place-items:center;z-index:10;padding:15px}
-.modal.show{display:grid}
-.dialog{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:18px;width:min(560px,100%);max-height:90vh;overflow:auto}
-.dialog input,.dialog textarea,.dialog select{width:100%;margin:6px 0 12px}
-.admin{display:none}.admin.show{display:block}.hidden{display:none!important}
-@media(max-width:650px){
- header{padding:11px 4%}.brand{font-size:18px}.wrap{padding:17px 4%}
- .grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
- .product-img{height:105px}.cardbody{padding:10px}.card h3{font-size:14px}
- .card .row{align-items:flex-start;flex-direction:column}.card .row button{width:100%}
- .hero{padding:22px 0 18px}
-}
+.modal{position:fixed;inset:0;background:#000b;display:none;place-items:center;z-index:10;padding:15px}.modal.show{display:grid}
+.dialog{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px;width:min(560px,100%);max-height:90vh;overflow:auto}
+.dialog input,.dialog textarea,.dialog select{width:100%;margin:6px 0 12px}.admin{display:none}.admin.show{display:block}.hidden{display:none!important}
+@media(min-width:850px){.grid{grid-template-columns:repeat(4,minmax(0,1fr))}.product-img{height:180px}}
+@media(max-width:560px){header{padding:11px 4%}.brand{font-size:19px}.wrap{padding:18px 4%}.header-actions button{padding:9px 11px;font-size:13px}.grid{gap:9px}.product-img{height:125px;font-size:58px}.cardbody{padding:10px}.card h3{font-size:15px}.card .row{align-items:flex-start;flex-direction:column}.card .row button{width:100%}.price{font-size:19px}.hero{padding:27px 0 23px}.cats button{font-size:14px;padding:11px 14px}}
 </style></head>
 <body>
-<header><div class="brand" id="brandName">Arte Net Store<small id="brandSubtitle">متجر أرتي نت</small></div><div class="row"><button class="secondary" id="cartButton" onclick="openCart()">السلة <span id="cartCount">0</span></button><button class="secondary" id="adminButton" onclick="toggleAdmin()">الإدارة</button></div></header>
+<header><div class="brand" id="brandName">Arte Net Store<small id="brandSubtitle">متجر أرتي نت</small></div><div class="header-actions"><button class="secondary" id="cartButton" onclick="openCart()">السلة <span id="cartCount">0</span></button><button class="secondary" id="adminButton" onclick="toggleAdmin()">الإدارة</button></div></header>
 <main class="wrap" id="store">
-<section class="hero"><div><h1 id="heroTitle">كل احتياجات الشبكات في مكان واحد</h1><p>منتجات الشبكات والإلكترونيات — تصفح واختر واطلب بسهولة.</p><button onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">تصفح المنتجات</button></div><div class="hero-art">📡</div></section>
+<section class="hero"><div><h1 id="heroTitle">كل احتياجات الشبكات في مكان واحد</h1><p>راوترات، أجهزة شبكات، كاميرات مراقبة، إكسسوارات والمزيد</p><button onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">تصفح المنتجات</button></div></section>
 <div class="toolbar"><input class="field" id="search" placeholder="ابحث عن منتج..." oninput="render()"><button class="secondary" onclick="document.getElementById('search').value='';render()">مسح البحث</button></div>
 <div class="cats" id="categories"></div><div class="row"><h2 class="section-title" id="products">المنتجات</h2><span class="muted" id="resultCount"></span></div><div class="grid" id="productGrid"></div>
 <section class="panel"><h3 class="section-title" id="paymentTitle">طرق الدفع</h3><p class="muted">فودافون كاش وInstaPay — بيانات الدفع تُضاف من لوحة الإدارة بعد إدخال البيانات الصحيحة. لا توجد بيانات دفع افتراضية.</p><p class="muted" id="paymentNotice">بيانات الدفع لم تُضف بعد.</p></section>
