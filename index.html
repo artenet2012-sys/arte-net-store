@@ -39,19 +39,37 @@ footer{border-top:1px solid var(--line);padding:22px 5%;color:var(--muted);text-
 <body>
 <header><div class="brand" id="brandName">Arte Net Store<small id="brandSubtitle">متجر أرتي نت</small></div><div class="header-actions"><button class="secondary" id="cartButton" onclick="openCart()">السلة <span id="cartCount">0</span></button><button class="secondary" id="adminButton" onclick="toggleAdmin()">الإدارة</button></div></header>
 <main class="wrap" id="store">
-<section class="hero"><div><h1 id="heroTitle">كل احتياجات الشبكات في مكان واحد</h1><p>راوترات، أجهزة شبكات، كاميرات مراقبة، إكسسوارات والمزيد</p><button onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">تصفح المنتجات</button></div></section>
-<div class="toolbar"><input class="field" id="search" placeholder="ابحث عن منتج..." oninput="render()"><button class="secondary" onclick="document.getElementById('search').value='';render()">مسح البحث</button></div>
+<section class="hero"><div><h1 id="heroTitle">كل احتياجات الشبكات في مكان واحد</h1><p id="heroDescription">راوترات، أجهزة شبكات، كاميرات مراقبة، إكسسوارات والمزيد</p><button id="heroButton" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">تصفح المنتجات</button></div></section>
+<div class="toolbar"><input class="field" id="search" placeholder="ابحث عن منتج..." oninput="render()"><button class="secondary" id="clearSearchButton" onclick="document.getElementById('search').value='';render()">مسح البحث</button></div>
 <div class="cats" id="categories"></div><div class="row"><h2 class="section-title" id="products">المنتجات</h2><span class="muted" id="resultCount"></span></div><div class="grid" id="productGrid"></div>
-<section class="panel"><h3 class="section-title" id="paymentTitle">طرق الدفع</h3><p class="muted">فودافون كاش وInstaPay — بيانات الدفع تُضاف من لوحة الإدارة بعد إدخال البيانات الصحيحة. لا توجد بيانات دفع افتراضية.</p><p class="muted" id="paymentNotice">بيانات الدفع لم تُضف بعد.</p></section>
+<section class="panel"><h3 class="section-title" id="paymentTitle">طرق الدفع</h3><p class="muted" id="paymentDescription">فودافون كاش وInstaPay — بيانات الدفع تُضاف من لوحة الإدارة بعد إدخال البيانات الصحيحة. لا توجد بيانات دفع افتراضية.</p><p class="muted" id="paymentNotice">بيانات الدفع لم تُضف بعد.</p></section>
 </main>
 <section class="wrap admin" id="admin"><div class="row"><h2 class="section-title" id="adminTitle">لوحة إدارة المتجر</h2><button class="secondary" onclick="returnToStore()">العودة للمتجر</button></div>
 <div class="panel"><h3>إضافة منتج</h3><input class="field" id="pname" placeholder="اسم المنتج"><select class="field" id="pcat"></select><input class="field" id="pprice" type="number" placeholder="السعر بالجنيه"><input class="field" id="pdesc" placeholder="وصف مختصر"><button onclick="addProduct()">إضافة المنتج</button></div>
 <div class="panel"><h3 id="manageCategoriesTitle">إدارة الأقسام</h3><input class="field" id="newcat" placeholder="اسم القسم الجديد"><button onclick="addCategory()">إضافة قسم</button><div id="catAdmin" class="muted"></div></div>
 <div class="panel"><h3 id="settingsTitle">بيانات التواصل والدفع</h3><label>رقم واتساب (بمفتاح الدولة)</label><input class="field" id="wa" placeholder="مثال: 201xxxxxxxxx"><label>بيانات فودافون كاش</label><input class="field" id="vodafone" placeholder="أدخل بيانات الدفع الصحيحة"><label>بيانات InstaPay</label><input class="field" id="instapay" placeholder="أدخل بيانات الدفع الصحيحة"><button onclick="saveSettings()">حفظ الإعدادات</button><p class="muted">يتم حفظ الإعدادات مركزيًا وتظهر لجميع زوار المتجر.</p></div>
+<div class="panel" id="customizePanel"><h3 class="section-title">تخصيص المتجر والنصوص</h3>
+<label>العنوان الرئيسي</label><input class="field" id="editHeroTitle">
+<label>وصف الواجهة الرئيسية</label><textarea class="field" id="editHeroDescription" rows="2"></textarea>
+<label>نص زر تصفح المنتجات</label><input class="field" id="editHeroButton">
+<label>النص أسفل اسم المتجر</label><input class="field" id="editSubtitle">
+<label>نص خانة البحث</label><input class="field" id="editSearchPlaceholder">
+<label>نص زر مسح البحث</label><input class="field" id="editClearSearch">
+<label>عنوان قسم المنتجات</label><input class="field" id="editProductsTitle">
+<label>عنوان قسم الدفع</label><input class="field" id="editPaymentTitle">
+<label>وصف قسم الدفع</label><textarea class="field" id="editPaymentDescription" rows="2"></textarea>
+<label>عنوان السلة</label><input class="field" id="editCartTitle">
+<label>نص زر إتمام الطلب</label><input class="field" id="editCheckoutButton">
+<label>نص أسفل المتجر</label><input class="field" id="editFooter" >
+<label>اللون الأساسي (HEX)</label><input class="field" id="editPrimaryColor" placeholder="#f58220">
+<label>لون الخلفية (HEX)</label><input class="field" id="editBackgroundColor" placeholder="#101316">
+<button onclick="saveCustomization()">حفظ تخصيص المتجر</button>
+<p class="muted">التغييرات تُحفظ في قاعدة البيانات وتظهر لجميع الزوار.</p></div>
 <div class="panel"><h3 id="currentProductsTitle">المنتجات الحالية</h3><div id="adminProducts"></div></div>
 </section>
-<div class="modal" id="cartModal"><div class="dialog"><div class="row"><h2>سلة المشتريات</h2><button class="secondary" onclick="closeCart()">إغلاق</button></div><div id="cartItems"></div><h3 id="total"></h3><input class="field" id="customer" placeholder="اسم العميل"><input class="field" id="phone" placeholder="رقم الهاتف"><textarea class="field" id="address" placeholder="العنوان بالتفصيل"></textarea><select class="field" id="pay"><option>فودافون كاش</option><option>InstaPay</option><option>الدفع عند الاستلام (إذا كان متاحًا)</option></select><button onclick="sendOrder()">إرسال الطلب عبر واتساب</button><p class="muted" id="orderNote"></p></div></div>
-<div id="toast" class="toast" role="status" aria-live="polite"></div>\n<footer id="footerText">Arte Net Store · متجر أرتي نت</footer>
+<div class="modal" id="cartModal"><div class="dialog"><div class="row"><h2 id="cartTitle">سلة المشتريات</h2><button class="secondary" onclick="closeCart()">إغلاق</button></div><div id="cartItems"></div><h3 id="total"></h3><input class="field" id="customer" placeholder="اسم العميل"><input class="field" id="phone" placeholder="رقم الهاتف"><textarea class="field" id="address" placeholder="العنوان بالتفصيل"></textarea><select class="field" id="pay"><option>فودافون كاش</option><option>InstaPay</option><option>الدفع عند الاستلام (إذا كان متاحًا)</option></select><button id="checkoutButton" onclick="sendOrder()">إرسال الطلب عبر واتساب</button><p class="muted" id="orderNote"></p></div></div>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+<footer id="footerText">Arte Net Store · متجر أرتي نت</footer>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 const SUPABASE_URL='https://zwkkofvhvtwrglxpcvbe.supabase.co';
@@ -66,9 +84,29 @@ async function loadStore(){
   const [cr,pr,sr]=await Promise.all([db.from('categories').select('*').eq('is_active',true).order('sort_order'),db.from('products').select('*').eq('is_active',true).order('created_at',{ascending:false}),db.from('store_settings').select('*').limit(1).maybeSingle()]);
   if(cr.error||pr.error||sr.error){$('productGrid').innerHTML='<p class="muted">تعذر تحميل بيانات المتجر. راجع اتصال قاعدة البيانات والصلاحيات.</p>';console.error(cr.error,pr.error,sr.error);return}
   cats=cr.data||[];products=pr.data||[];settings=sr.data||{};if(active!=='الكل'&&!cats.some(c=>c.name===active))active='الكل';
+  applyStoreSettings();
   $('brandName').childNodes[0].textContent=settings.store_name||'Arte Net Store';$('wa').value=settings.whatsapp_number||'201003227963';$('vodafone').value=settings.vodafone_cash||'';$('instapay').value=settings.instapay||'';
   render();
 }
+function setText(id,value){const el=$(id);if(el&&value!==null&&value!==undefined&&value!=='')el.textContent=value;}
+function applyStoreSettings(){
+ setText('brandSubtitle',settings.store_subtitle||'متجر أرتي نت');
+ setText('heroTitle',settings.hero_title||'كل احتياجات الشبكات في مكان واحد');
+ setText('heroDescription',settings.hero_description||'راوترات، أجهزة شبكات، كاميرات مراقبة، إكسسوارات والمزيد');
+ setText('heroButton',settings.hero_button_text||'تصفح المنتجات');
+ $('search').placeholder=settings.search_placeholder||'ابحث عن منتج...';
+ setText('clearSearchButton',settings.clear_search_text||'مسح البحث');
+ setText('products',settings.products_title||'المنتجات');
+ setText('paymentTitle',settings.payment_title||'طرق الدفع');
+ setText('paymentDescription',settings.payment_description||'فودافون كاش وInstaPay — بيانات الدفع تُضاف من لوحة الإدارة بعد إدخال البيانات الصحيحة. لا توجد بيانات دفع افتراضية.');
+ setText('cartTitle',settings.cart_title||'سلة المشتريات');
+ setText('checkoutButton',settings.checkout_button_text||'إرسال الطلب عبر واتساب');
+ setText('footerText',settings.footer_text||'Arte Net Store · متجر أرتي نت');
+ if(settings.primary_color&&/^#[0-9a-fA-F]{6}$/.test(settings.primary_color))document.documentElement.style.setProperty('--orange',settings.primary_color);
+ if(settings.background_color&&/^#[0-9a-fA-F]{6}$/.test(settings.background_color))document.documentElement.style.setProperty('--bg',settings.background_color);
+}
+function fillCustomizationForm(){const map={editHeroTitle:'hero_title',editHeroDescription:'hero_description',editHeroButton:'hero_button_text',editSubtitle:'store_subtitle',editSearchPlaceholder:'search_placeholder',editClearSearch:'clear_search_text',editProductsTitle:'products_title',editPaymentTitle:'payment_title',editPaymentDescription:'payment_description',editCartTitle:'cart_title',editCheckoutButton:'checkout_button_text',editFooter:'footer_text',editPrimaryColor:'primary_color',editBackgroundColor:'background_color'};for(const [id,key] of Object.entries(map)){if($(id))$(id).value=settings[key]||'';}}
+async function saveCustomization(){if(!adminUser)return msg('سجل دخول المدير أولاً');const payload={hero_title:$('editHeroTitle').value.trim(),hero_description:$('editHeroDescription').value.trim(),hero_button_text:$('editHeroButton').value.trim(),store_subtitle:$('editSubtitle').value.trim(),search_placeholder:$('editSearchPlaceholder').value.trim(),clear_search_text:$('editClearSearch').value.trim(),products_title:$('editProductsTitle').value.trim(),payment_title:$('editPaymentTitle').value.trim(),payment_description:$('editPaymentDescription').value.trim(),cart_title:$('editCartTitle').value.trim(),checkout_button_text:$('editCheckoutButton').value.trim(),footer_text:$('editFooter').value.trim(),primary_color:$('editPrimaryColor').value.trim()||'#f58220',background_color:$('editBackgroundColor').value.trim()||'#101316'};for(const key of ['primary_color','background_color'])if(!/^#[0-9a-fA-F]{6}$/.test(payload[key]))return msg('اكتب اللون بصيغة HEX مثل #f58220');const {data,error}=await db.from('store_settings').select('id').limit(1).maybeSingle();if(error)return msg('تعذر قراءة الإعدادات: '+error.message);const result=data?await db.from('store_settings').update(payload).eq('id',data.id):await db.from('store_settings').insert({id:1,...payload});if(result.error)return msg('تعذر حفظ التخصيص: '+result.error.message);await loadStore();fillCustomizationForm();msg('تم حفظ تخصيص المتجر لجميع الزوار');}
 function render(){
  const catNames=cats.map(c=>c.name);$('categories').innerHTML=['الكل',...catNames].map(c=>`<button class="${active===c?'':'secondary'}" onclick="active=${JSON.stringify(c)};render()">${esc(c)}</button>`).join('');
  const q=$('search').value.trim().toLowerCase();const list=products.filter(p=>(active==='الكل'||cats.find(c=>c.id===p.category_id)?.name===active)&&(`${p.name} ${p.description||''}`).toLowerCase().includes(q));
@@ -93,7 +131,7 @@ async function removeProduct(id){if(!confirm('حذف المنتج؟'))return;let
 async function addCategory(){let name=$('newcat').value.trim();if(!name)return;let {error}=await db.from('categories').insert({name,sort_order:cats.length,is_active:true});if(error)return msg(error.message);$('newcat').value='';await loadStore()}
 async function delCat(id){if(!confirm('حذف القسم؟'))return;let {error}=await db.from('categories').delete().eq('id',id);if(error)return msg(error.message);await loadStore()}
 async function saveSettings(){let payload={store_name:$('storeName').value.trim()||'Arte Net Store',whatsapp_number:$('wa').value.trim().replace(/\D/g,''),vodafone_cash:$('vodafone').value.trim(),instapay:$('instapay').value.trim()};let {data,error}=await db.from('store_settings').select('id').limit(1).maybeSingle();if(error)return msg(error.message);let r=data?await db.from('store_settings').update(payload).eq('id',data.id):await db.from('store_settings').insert({id:1,...payload});if(r.error)return msg('تعذر حفظ الإعدادات: '+r.error.message);await loadStore();msg('تم حفظ الإعدادات')}
-async function renderAdmin(){if(!$('adminProducts'))return;$('adminProducts').innerHTML=products.map(p=>`<p>${esc(p.name)} — ${money(p.price)} (المخزون: ${p.stock??0}) <button class="secondary" onclick="editProduct(${p.id})">تعديل</button> <button class="danger" onclick="removeProduct(${p.id})">حذف</button></p>`).join('');$('catAdmin').innerHTML=cats.map(c=>`<p>${esc(c.name)} <button class="danger" onclick="delCat(${c.id})">حذف</button></p>`).join('');if(settings.store_name)$('storeName').value=settings.store_name}
+async function renderAdmin(){if(!$('adminProducts'))return;$('adminProducts').innerHTML=products.map(p=>`<p>${esc(p.name)} — ${money(p.price)} (المخزون: ${p.stock??0}) <button class="secondary" onclick="editProduct(${p.id})">تعديل</button> <button class="danger" onclick="removeProduct(${p.id})">حذف</button></p>`).join('');$('catAdmin').innerHTML=cats.map(c=>`<p>${esc(c.name)} <button class="danger" onclick="delCat(${c.id})">حذف</button></p>`).join('');if(settings.store_name)$('storeName').value=settings.store_name;fillCustomizationForm()}
 async function loadOrders(){let {data,error}=await db.from('orders').select('*').order('created_at',{ascending:false});if(error){$('ordersList').textContent=error.message;return}$('ordersList').innerHTML=(data||[]).map(o=>`<div class="panel"><b>طلب #${o.id}</b> — ${esc(o.customer_name)} — ${money(o.total_amount??o.total)}<p>${esc(o.phone||o.customer_phone||'')} · ${esc(o.address||o.customer_address||'')}</p><p>الحالة: ${esc(o.status||'new')}</p><select id="status${o.id}"><option value="new">جديد</option><option value="processing">قيد التجهيز</option><option value="shipped">تم الشحن</option><option value="completed">مكتمل</option><option value="cancelled">ملغي</option></select><button onclick="updateOrder(${o.id})">تحديث الحالة</button></div>`).join('')||'لا توجد طلبات حتى الآن'}
 async function updateOrder(id){let {error}=await db.from('orders').update({status:$('status'+id).value}).eq('id',id);if(error)return msg(error.message);msg('تم تحديث الطلب');loadOrders()}
 $('admin').insertAdjacentHTML('afterbegin','<div class="panel"><button class="secondary" onclick="loadOrders()">تحديث الطلبات</button><button class="secondary" onclick="adminLogout()">تسجيل الخروج</button><h3>الطلبات</h3><div id="ordersList"></div></div>');
