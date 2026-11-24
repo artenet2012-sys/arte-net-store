@@ -1,0 +1,596 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Arte Net Store | متجر أرتي نت</title>
+<style>
+:root{--bg:#101316;--panel:#171b1f;--panel2:#20262b;--line:#424950;--txt:#f7f7f7;--muted:#c4c9ce;--orange:#f58220}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--txt);font-family:Tahoma,Arial,sans-serif}
+header{position:sticky;top:0;z-index:5;background:#111519;border-bottom:1px solid #343a40;padding:13px 4%;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brand{font-size:23px;font-weight:800;direction:ltr;text-align:right}.brand small{display:block;direction:rtl;color:var(--muted);font-size:13px;font-weight:400;margin-top:5px}
+.header-actions{display:flex;gap:8px;align-items:center}
+button,input,select,textarea{font:inherit}button{border:1px solid transparent;border-radius:9px;padding:11px 15px;background:var(--orange);color:#171717;font-weight:700;cursor:pointer}
+button.secondary{background:#202428;border:1px solid #454c53;color:var(--txt)}button.danger{background:#702b2b;color:#fff}
+.wrap{max-width:1160px;margin:auto;padding:24px 4%}
+.hero{padding:32px 18px 28px;border:1px solid #454d55;border-radius:18px;background:radial-gradient(ellipse at 50% 0%,#28313a 0%,#151a1f 68%);display:block;text-align:center;margin-top:14px}
+h1{font-size:clamp(25px,4vw,38px);margin:0 0 14px;color:#f7a45d}.hero p,.muted{color:var(--muted);line-height:1.85}
+.hero button{margin-top:10px;padding:14px 24px;font-size:17px}
+#heroButton{background:linear-gradient(145deg,#d93636,#a71919);border:1px solid #ff7777;color:#fff;box-shadow:0 5px 14px #0005}
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;margin:24px 0 12px}
+.field{background:#202428;border:1px solid #454c53;color:var(--txt);padding:13px;border-radius:9px;min-width:0}
+.toolbar input{flex:1;min-width:180px}
+.cats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;padding:8px 0 16px;scrollbar-width:thin}
+.cats button{white-space:normal;min-height:62px;padding:12px 10px;font-size:15px;border:1px solid #555d65;background:#171c21;color:#fff}.cats button.active{background:var(--orange);color:#171717;border-color:var(--orange)}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.card{background:linear-gradient(145deg,#1a2025,#14191d);border:1px solid #48515a;border-radius:15px;overflow:hidden}
+.product-img{height:145px;background:linear-gradient(145deg,#252b31,#151a1f);display:grid;place-items:center;font-size:76px}
+.cardbody{padding:15px}.card h3{margin:4px 0 8px;font-size:18px}
+.price{color:#ff922e;font-size:23px;font-weight:800;white-space:nowrap}
+.tag{font-size:11px;color:#f4c49c;background:#38291d;padding:5px 8px;border-radius:5px;display:inline-block;margin-bottom:8px}
+.row{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.section-title{margin:25px 0 12px;color:#f6a15b;font-size:24px}
+.panel{background:var(--panel);border:1px solid var(--line);padding:16px;border-radius:12px;margin:13px 0}
+footer{border-top:1px solid var(--line);padding:22px 5%;color:var(--muted);text-align:center;margin-top:35px}
+.modal{position:fixed;inset:0;background:#000b;display:none;place-items:center;z-index:10;padding:15px}.modal.show{display:grid}
+.dialog{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px;width:min(560px,100%);max-height:90vh;overflow:auto}
+.dialog input,.dialog textarea,.dialog select{width:100%;margin:6px 0 12px}.toast{position:fixed;bottom:22px;left:50%;transform:translate(-50%,20px);z-index:30;background:#263238;color:#fff;border:1px solid #f58220;border-radius:12px;padding:13px 18px;box-shadow:0 8px 28px #0008;opacity:0;pointer-events:none;transition:.2s;max-width:calc(100% - 28px);text-align:center}.toast.show{opacity:1;transform:translate(-50%,0)}.edit-list{display:grid;gap:9px}.edit-row{display:flex;align-items:center;justify-content:space-between;gap:10px;background:#20262b;border:1px solid #424950;border-radius:10px;padding:11px}.edit-row .edit-meta{min-width:0}.edit-row strong{display:block;margin-bottom:4px}.edit-row small{color:#c4c9ce;display:block;overflow-wrap:anywhere}.pencil{flex:0 0 auto;padding:8px 11px;min-width:42px}.search-action{min-width:48px;font-size:23px;line-height:1;padding:9px 13px}.editor-modal{position:fixed;inset:0;background:#000b;z-index:25;display:none;place-items:center;padding:14px}.editor-modal.show{display:grid}.editor-box{width:min(520px,100%);background:#171b1f;border:1px solid #424950;border-radius:14px;padding:18px;max-height:90vh;overflow:auto}.editor-box label{display:block;margin:12px 0 5px}.editor-box input,.editor-box textarea{width:100%}.admin-top-actions{display:flex;gap:8px;flex-wrap:nowrap;align-items:center}.admin-top-actions button{white-space:nowrap;padding:9px 11px;font-size:13px}.empty-category-prompt{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;width:100%;padding:18px 0 24px;gap:10px}.empty-category-prompt .inquiry-action{display:flex;justify-content:center;width:100%}.category-modal .dialog{width:min(760px,94vw)}.category-modal-products{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin-top:14px}.category-modal-products .card{min-width:0;cursor:pointer;transition:transform .15s,border-color .15s}.category-modal-products .card:active{transform:scale(.985)}.category-modal-products .product-img{height:96px;padding:5px;background:#11171c}.category-modal-products .cardbody{padding:8px}.category-modal-products .card h3{font-size:12px;line-height:1.4;min-height:2.6em;margin:0 0 4px}.category-modal-products .card .muted{font-size:11px;line-height:1.5;margin:4px 0;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}.category-modal-products .price{font-size:14px}.category-modal-products .row{align-items:center;flex-direction:row!important}.category-modal-products .row button{width:auto!important;padding:6px 7px;font-size:11px}.detail-gallery-wrap{background:#11171c;border:1px solid #343d45;border-radius:14px;padding:10px}.product-detail-image{height:min(46vh,390px);max-height:390px;object-fit:contain}.detail-gallery-count{text-align:center;color:#c4c9ce;font-size:12px;margin-top:4px}.detail-info{padding:8px 2px}.detail-info h3{margin:8px 0;color:#f4a05b}.category-empty-message{text-align:center;padding:28px 12px;color:#e9edf2;font-weight:700;font-size:17px}.admin{display:none}.admin.show{display:block}.hidden{display:none!important}
+@media(min-width:850px){.grid{grid-template-columns:repeat(4,minmax(0,1fr))}.product-img{height:180px}}
+@media(max-width:560px){.category-modal-products{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.category-modal-products .product-img{height:88px}.category-modal-products .cardbody{padding:7px}.category-modal-products .card h3{font-size:12px}.category-modal-products .price{font-size:13px}.cats{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.cats button{min-height:58px;font-size:14px}header{padding:11px 4%}.brand{font-size:19px}.wrap{padding:18px 4%}.header-actions button{padding:9px 11px;font-size:13px}.grid{gap:9px}.product-img{height:125px;font-size:58px}.cardbody{padding:10px}.card h3{font-size:15px}.card .row{align-items:flex-start;flex-direction:column}.card .row button{width:100%}.price{font-size:19px}.hero{padding:27px 0 23px}.cats button{font-size:14px;padding:11px 14px}}
+
+.category-chip{background:linear-gradient(145deg,#242a31,#15191e);border:1px solid #39424c;color:#e9edf2;border-radius:16px;padding:12px 16px;min-width:112px;box-shadow:0 4px 12px #0005;transition:.18s;display:inline-flex;gap:8px;align-items:center;justify-content:center}.category-chip span{color:#f58220}.category-chip.selected{background:linear-gradient(145deg,#f58220,#c95d0b);border-color:#ffb16d;color:#fff;box-shadow:0 0 0 2px #f5822040,0 8px 18px #0006;transform:translateY(-2px)}.category-chip.selected span{color:#fff}#categories{display:flex;gap:10px;overflow:visible;flex-wrap:wrap;padding:10px 2px 16px;scrollbar-width:none;justify-content:flex-start}.dialog .panel{margin:12px 0;background:#20262d;border:1px solid #f5822055;border-radius:14px;padding:12px}.dialog{max-height:90vh;overflow:auto}
+
+.cart-icon-button{position:relative;min-width:52px;min-height:44px;padding:7px 12px;display:inline-flex;align-items:center;justify-content:center;background:#202428;border:1px solid #454c53;color:#fff}
+.cart-glyph{font-size:23px;line-height:1}
+.cart-badge{position:absolute;top:-8px;right:-7px;min-width:21px;height:21px;padding:0 5px;border-radius:20px;background:#f58220;color:#171717;font-size:12px;font-weight:900;display:flex;align-items:center;justify-content:center;border:2px solid #111519}
+#categories{display:flex!important;flex-wrap:wrap!important;overflow:visible!important;justify-content:flex-start}
+@media(max-width:560px){#categories{display:flex!important;flex-wrap:wrap!important;overflow:visible!important}.category-chip{min-width:calc(50% - 6px);flex:1 1 calc(50% - 6px)}}
+.product-detail-image{width:100%;height:280px;object-fit:contain;background:#11171c;border-radius:12px}.gallery-thumbs{display:flex;gap:8px;overflow-x:auto;padding:8px 0}.gallery-thumbs img{width:64px;height:64px;object-fit:cover;border:2px solid #454c53;border-radius:8px;cursor:pointer}.gallery-thumbs img.active{border-color:var(--orange)}.photo-preview{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0}.photo-preview img{width:72px;height:72px;object-fit:cover;border-radius:8px;border:1px solid #555}.product-photo-field{display:block!important;clear:both;width:100%;margin:14px 0;text-align:right}.product-photo-field label{display:block!important;width:100%;margin:0 0 8px;text-align:right}.photo-preview .photo-thumb{position:relative;display:inline-flex}.photo-preview .photo-thumb button{position:absolute;top:-7px;left:-7px;width:25px;height:25px;padding:0;border-radius:50%;background:#b3261e;color:#fff;border:1px solid #fff;font-size:17px;line-height:1}.empty-category-prompt{display:flex;flex-direction:column;justify-content:center;align-items:center;width:100%;padding:22px 0 30px;text-align:center;gap:12px}.empty-category-prompt h3{color:#fff;text-align:center;width:100%;margin:0 0 8px}.inquiry-action{display:flex;justify-content:center;width:100%;text-decoration:none}.inquiry-action button{min-width:220px;margin-inline:auto}
+.repair-request-button{width:220px;max-width:100%;margin:0 auto;display:block;background:linear-gradient(145deg,#287bd6,#1453a3);border:1px solid #70b2ff;color:#fff;box-shadow:0 5px 14px #0005;padding:11px 15px;font-size:16px}.repair-request-button:active{transform:scale(.985)}
+.inquiry-action button{background:linear-gradient(145deg,#25a85a,#14783b);border:1px solid #58d889;color:#fff;box-shadow:0 5px 14px #0005}
+#repairRequestModal .dialog{width:min(520px,100%)}#repairRequestModal label{display:block;margin:10px 0 5px;color:#f3a15d}#repairRequestModal input,#repairRequestModal select,#repairRequestModal textarea{width:100%;margin:5px 0 10px}#repairRequestModal textarea{min-height:95px;resize:vertical}#repairRequestModal .repair-submit{width:100%;margin-top:8px;background:linear-gradient(145deg,#247b78,#175653);border:1px solid #49aaa4;color:#fff}\n
+.cart-items-grid{display:flex!important;flex-flow:row wrap!important;align-items:stretch;justify-content:flex-start;gap:8px;width:100%;min-width:0}.cart-line{display:flex;flex:0 0 calc(50% - 4px)!important;width:calc(50% - 4px)!important;max-width:calc(50% - 4px)!important;min-width:0;flex-direction:column;gap:7px;align-items:stretch;padding:8px;background:#20262b;border:1px solid #394149;border-radius:12px;overflow:hidden}.cart-line-image{width:100%;height:104px;flex:0 0 104px;cursor:pointer;border-radius:9px;background:#101519;overflow:hidden;display:grid;place-items:center;font-size:30px}.cart-line-image img{width:100%;height:100%;object-fit:contain;display:block}.cart-line-info{flex:1;min-width:0;display:grid;gap:6px;text-align:center}.cart-line-info strong{font-size:13px;cursor:pointer;text-decoration:underline;text-decoration-color:#f5822077;line-height:1.4;overflow-wrap:anywhere}.cart-line-info small{color:var(--muted);font-size:11px}.cart-line-actions{display:flex;align-items:center;justify-content:center;gap:5px;flex-wrap:wrap;direction:rtl}.cart-qty-label{font-size:11px;color:#c4c9ce;white-space:nowrap}.cart-qty-value{font-size:13px;font-weight:800;min-width:14px;text-align:center}.cart-line-actions button{padding:5px 8px;font-size:12px}.cart-line-info>b{color:#ff922e;font-size:13px}@media(max-width:560px){.cart-items-grid{display:flex!important;flex-flow:row wrap!important;gap:7px}.cart-line{flex:0 0 calc(50% - 4px)!important;width:calc(50% - 4px)!important;max-width:calc(50% - 4px)!important;padding:7px}.cart-line-image{height:92px;flex-basis:92px}.cart-line-actions{gap:4px}.cart-line-actions button{padding:5px 7px;font-size:11px}}
+@media(max-width:360px){.cart-line{flex-basis:100%!important;width:100%!important;max-width:100%!important}}\nbody.admin-portal #store,body.admin-portal #cartButton{display:none!important}body.admin-portal header{justify-content:flex-start}body.admin-portal header:after{content:"لوحة إدارة المتجر";color:#f6a15b;font-weight:800;font-size:18px}
+/* Compact order cards: match the approved reference layout */
+
+/* Product sale presentation */
+.sale-price-wrap{display:flex;flex-wrap:wrap;align-items:center;gap:7px;margin:8px 0}
+.sale-price-current{font-size:23px;font-weight:900;color:#43d17d;white-space:nowrap}
+.sale-price-old{font-size:14px;color:#f1f3f5;text-decoration:line-through;text-decoration-thickness:2px;text-decoration-color:#ffb36b;white-space:nowrap;font-weight:700;opacity:1}
+.sale-discount-badge{display:inline-flex;align-items:center;justify-content:center;padding:5px 9px;border-radius:7px;background:linear-gradient(135deg,#ed3434,#a91616);border:1px solid #ff8585;color:#fff;font-size:12px;font-weight:900;white-space:nowrap}
+.sale-saving{display:block;color:#65d995;font-size:12px;font-weight:700;margin-top:3px}
+.sale-price-detail{margin:10px 0 14px;padding:12px;border:1px solid #3c7655;background:linear-gradient(135deg,#172b21,#18221d);border-radius:12px}
+.sale-price-detail .sale-price-current{font-size:27px}
+.sale-price-cart{display:flex;flex-wrap:wrap;align-items:center;gap:6px}
+.sale-price-cart .sale-price-current{font-size:14px}
+.sale-price-cart .sale-price-old{font-size:11px}
+.sale-price-cart .sale-discount-badge{font-size:10px;padding:3px 6px}
+.order-card{padding:12px 14px;border-radius:18px;margin:10px 0;background:linear-gradient(145deg,#1a2025,#15191d);border:1px solid #424950}
+.order-heading{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:2px 0 12px;border-bottom:1px solid #343b42;font-size:16px}
+.order-price{color:#ff922e;white-space:nowrap;font-size:16px}
+.order-details{padding:8px 0 4px;text-align:right}
+.order-details p{margin:8px 0;font-size:14px;line-height:1.55;color:#e5e8eb}
+.order-status{display:inline-block;padding:4px 11px;border:1px solid #8b633f;border-radius:22px;background:#38291d;color:#f4c49c}
+.order-actions{display:flex;align-items:center;gap:8px;margin-top:10px;direction:rtl}
+.order-status-select{flex:1 1 0;width:0;min-width:0;padding:9px 10px;border-radius:12px;font-size:13px}
+.order-actions button{flex:0 0 auto;padding:10px 13px;border-radius:12px;font-size:14px;white-space:nowrap}
+.order-actions .order-save{background:#f58220;color:#171717}
+.order-actions .order-delete{background:#702b2b;color:#fff}
+@media(max-width:380px){.order-card{padding:10px}.order-heading{font-size:14px}.order-details p{font-size:13px;margin:7px 0}.order-actions{gap:6px}.order-actions button{padding:9px 9px;font-size:12px}.order-status-select{font-size:12px;padding:8px 6px}}
+
+.admin-tabs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin:18px 0}.admin-tab{background:#20262b;border:1px solid #454c53;color:#f5f5f5;padding:14px 10px;border-radius:12px;font-size:15px}.admin-tab.active{background:linear-gradient(145deg,#f58220,#c95d0b);color:#171717;border-color:#ffb16d}.admin-section>.panel{margin-top:12px}.admin-section .field{width:100%;margin:7px 0 12px}@media(min-width:700px){.admin-tabs{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.order-items-list{margin:4px 0 12px;padding-right:22px;line-height:1.8}.order-items-list li{margin:2px 0}
+
+/* Compact, polished product cards inside category popups */
+.category-modal .dialog{width:min(680px,94vw)!important;padding:14px!important}
+.category-modal-products{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px!important;align-items:stretch}
+.category-modal-products>.card{min-width:0!important;display:flex!important;flex-direction:column!important;align-self:start!important;border-radius:13px!important}
+.category-modal-products>.card>.product-img{height:112px!important;min-height:112px!important;max-height:112px!important;flex:0 0 112px!important;padding:5px!important;overflow:hidden!important;border-radius:12px 12px 0 0!important;background:#11171c!important}
+.category-modal-products>.card>.product-img img{width:100%!important;height:100%!important;max-height:102px!important;object-fit:contain!important;display:block!important}
+.category-modal-products>.card>.cardbody{padding:9px!important;display:flex!important;flex-direction:column!important;gap:5px!important;min-width:0!important}
+.category-modal-products>.card .cardbody h3{font-size:13px!important;line-height:1.4!important;min-height:0!important;margin:0!important;white-space:normal!important}
+.category-modal-products>.card .cardbody>.muted{font-size:10px!important;line-height:1.45!important;margin:0!important;min-height:0!important;max-height:2.9em!important;overflow:hidden!important}
+.category-modal-products>.card .cardbody>.row{display:flex!important;flex-direction:column!important;align-items:stretch!important;gap:6px!important;margin-top:3px!important}
+.category-modal-products>.card .sale-price-wrap{gap:4px!important;margin:2px 0!important;align-items:center!important}
+.category-modal-products>.card .sale-price-current{font-size:16px!important}
+.category-modal-products>.card .sale-price-old{font-size:11px!important}
+.category-modal-products>.card .sale-discount-badge{font-size:10px!important;padding:3px 6px!important}
+.category-modal-products>.card .sale-saving{font-size:10px!important;margin-top:0!important}
+.category-modal-products>.card .price{font-size:16px!important}
+.category-modal-products>.card .cardbody>.row button{width:100%!important;padding:8px 6px!important;font-size:12px!important;border-radius:8px!important}
+@media(max-width:380px){.category-modal-products{gap:7px!important}.category-modal-products>.card>.product-img{height:96px!important;min-height:96px!important;max-height:96px!important;flex-basis:96px!important}.category-modal-products>.card>.product-img img{max-height:86px!important}.category-modal-products>.card .cardbody{padding:7px!important}.category-modal-products>.card .sale-price-current{font-size:14px!important}}
+
+
+/* Refined compact 3-column product cards inside category modal */
+.category-modal .dialog{width:min(760px,96vw)!important;padding:14px!important}
+.category-modal-products{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:8px!important;align-items:start!important}
+.category-modal-products>.card{min-width:0!important;border-radius:11px!important;overflow:hidden!important}
+.category-modal-products>.card>.product-img{height:126px!important;min-height:126px!important;max-height:126px!important;flex:0 0 126px!important;padding:0!important;display:flex!important;align-items:center!important;justify-content:center!important;overflow:hidden!important;background:#20262b!important}
+.category-modal-products>.card>.product-img img{width:100%!important;height:100%!important;max-height:none!important;object-fit:contain!important;display:block!important;background:transparent!important}
+.category-modal-products>.card>.cardbody{padding:7px!important;gap:5px!important}
+.category-modal-products>.card .cardbody h3{font-size:12px!important;line-height:1.35!important}
+.category-modal-products>.card .cardbody>.muted{font-size:9px!important;line-height:1.35!important;max-height:2.7em!important}
+.category-modal-products>.card .sale-price-wrap{gap:3px!important;flex-wrap:wrap!important}
+.category-modal-products>.card .sale-price-current{font-size:14px!important}
+.category-modal-products>.card .sale-price-old{font-size:9px!important;color:#f1f3f5!important;text-decoration-color:#ffb36b!important;text-decoration-thickness:2px!important}
+.category-modal-products>.card .sale-discount-badge{font-size:9px!important;padding:2px 4px!important}
+.category-modal-products>.card .sale-saving{font-size:9px!important}
+.category-modal-products>.card .price{font-size:14px!important}
+.category-modal-products>.card .cardbody>.row button{font-size:10px!important;padding:7px 4px!important;white-space:normal!important}
+@media(max-width:380px){.category-modal-products{gap:5px!important}.category-modal-products>.card>.product-img{height:105px!important;min-height:105px!important;max-height:105px!important;flex-basis:105px!important}.category-modal-products>.card>.cardbody{padding:5px!important}.category-modal-products>.card .cardbody h3{font-size:11px!important}.category-modal-products>.card .sale-price-current{font-size:12px!important}}
+
+
+/* Product card polish: full image area, consistent card heights and balanced spacing */
+.category-modal-products{align-items:stretch!important;grid-auto-rows:1fr!important}
+.category-modal-products>.card{height:100%!important;min-height:0!important;display:flex!important;flex-direction:column!important;align-self:stretch!important}
+.category-modal-products>.card>.product-img{height:138px!important;min-height:138px!important;max-height:138px!important;flex:0 0 138px!important;padding:4px!important;background:#252b31!important}
+.category-modal-products>.card>.product-img img{width:100%!important;height:100%!important;object-fit:contain!important;object-position:center!important;background:transparent!important}
+.category-modal-products>.card>.cardbody{flex:1 1 auto!important;display:flex!important;flex-direction:column!important;min-height:0!important}
+.category-modal-products>.card .cardbody>.muted{min-height:2.7em!important}
+.category-modal-products>.card .cardbody>.row{margin-top:auto!important;padding-top:5px!important}
+.category-modal-products>.card .sale-price-wrap{min-height:38px!important}
+.detail-gallery-wrap{background:#252b31!important;padding:8px!important}
+.product-detail-image{width:100%!important;height:min(42vh,330px)!important;max-height:330px!important;object-fit:contain!important;object-position:center!important;background:#252b31!important;border-radius:10px!important}
+#aiDescriptionButton{width:100%;margin:5px 0 8px;background:linear-gradient(135deg,#315b86,#243d5b);border:1px solid #6e9dca;color:#fff}
+#aiDescriptionButton:disabled{opacity:.65;cursor:wait}
+@media(max-width:560px){
+ .category-modal .dialog{width:min(760px,98vw)!important;padding:10px!important}
+ .category-modal-products{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:6px!important}
+ .category-modal-products>.card>.product-img{height:125px!important;min-height:125px!important;max-height:125px!important;flex-basis:125px!important;padding:2px!important}
+ .category-modal-products>.card>.cardbody{padding:6px!important}
+ .category-modal-products>.card .cardbody h3{font-size:11px!important;min-height:2.7em!important}
+ .category-modal-products>.card .cardbody>.muted{font-size:9px!important;min-height:2.7em!important}
+ .category-modal-products>.card .sale-price-current{font-size:12px!important}
+ .category-modal-products>.card .sale-price-old{font-size:9px!important;color:#f1f3f5!important;text-decoration-color:#ffb36b!important;text-decoration-thickness:2px!important}
+ .category-modal-products>.card .sale-discount-badge{font-size:9px!important;padding:2px 4px!important}
+ .category-modal-products>.card .cardbody>.row button{font-size:10px!important;padding:7px 3px!important}
+}
+
+</style>
+<style id="arte-compact-product-refresh">
+/* Compact, consistent product tiles */
+.category-modal .dialog{width:min(760px,96vw)!important;padding:12px!important}
+.category-modal-products{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:7px!important;align-items:stretch!important}
+.category-modal-products>.card{min-width:0!important;min-height:0!important;height:100%!important;display:flex!important;flex-direction:column!important;align-self:stretch!important;border-radius:10px!important;overflow:hidden!important}
+.category-modal-products>.card>.product-img{height:108px!important;min-height:108px!important;max-height:108px!important;flex:0 0 108px!important;padding:2px!important;display:flex!important;align-items:center!important;justify-content:center!important;overflow:hidden!important;background:#171d22!important}
+.category-modal-products>.card>.product-img img{display:block!important;width:100%!important;height:100%!important;max-height:none!important;object-fit:contain!important;object-position:center!important;background:transparent!important}
+.category-modal-products>.card>.cardbody{padding:7px 6px 8px!important;display:flex!important;flex:1 1 auto!important;flex-direction:column!important;gap:6px!important;min-width:0!important}
+.category-modal-products>.card .cardbody h3{font-size:11px!important;line-height:1.35!important;min-height:2.7em!important;max-height:2.7em!important;overflow:hidden!important;margin:0!important;text-align:right!important}
+.category-modal-products>.card .card-price{margin-top:auto!important;min-height:49px!important;display:flex!important;align-items:center!important}
+.category-modal-products>.card .sale-price-wrap{display:flex!important;flex-direction:column!important;gap:3px!important;width:100%!important;margin:0!important}
+.category-modal-products>.card .sale-price-line{display:flex!important;align-items:center!important;justify-content:center!important;gap:7px!important;flex-wrap:nowrap!important;width:100%!important;position:relative!important}
+.category-modal-products>.card .sale-saving-line{display:flex!important;align-items:center!important;justify-content:center!important;gap:3px!important;flex-wrap:nowrap!important;width:100%!important}
+.category-modal-products>.card .sale-price-current{font-size:12px!important;white-space:nowrap!important}
+.category-modal-products>.card .sale-price-old{font-size:9px!important;white-space:nowrap!important;color:#aeb5bc!important;text-decoration-color:#858d95!important;text-decoration-thickness:1.5px!important;opacity:.78!important}
+.category-modal-products>.card .sale-saving{font-size:9px!important;margin:0!important;white-space:nowrap!important}
+.category-modal-products>.card .sale-discount-badge{font-size:8px!important;padding:2px 4px!important;border-radius:5px!important}
+.category-modal-products>.card .price{font-size:13px!important}
+.category-modal-products>.card .card-add-button{width:100%!important;margin-top:2px!important;padding:7px 3px!important;font-size:10px!important;line-height:1.3!important;border-radius:7px!important;white-space:nowrap!important}
+.ai-description-button{width:100%;margin-top:10px;background:linear-gradient(135deg,#285f91,#173d65);border:1px solid #6da9df;color:#fff;padding:12px;border-radius:10px;font-weight:700}
+.ai-description-button:disabled{opacity:.65}
+.product-photo-field .photo-preview{margin:8px 0 12px}
+@media(max-width:360px){.category-modal-products{gap:5px!important}.category-modal-products>.card>.product-img{height:92px!important;min-height:92px!important;max-height:92px!important;flex-basis:92px!important}.category-modal-products>.card>.cardbody{padding:6px 4px!important}.category-modal-products>.card .sale-price-current{font-size:11px!important}.category-modal-products>.card .card-add-button{font-size:9px!important}}
+@media(min-width:600px){.category-modal-products{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:10px!important}.category-modal-products>.card>.product-img{height:145px!important;min-height:145px!important;max-height:145px!important;flex-basis:145px!important}}
+
+/* Compact, square product tiles and discount badge overlay */
+.category-modal-products{grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;align-items:stretch}
+.category-modal-products .card{height:100%;display:flex;flex-direction:column;min-width:0}
+.category-modal-products .product-img{height:auto;aspect-ratio:1/1;padding:0;position:relative;overflow:hidden;background:#20262b;display:block}
+.category-modal-products .product-img img{display:block;width:100%;height:100%;object-fit:cover;object-position:center}
+.category-modal-products .cardbody{padding:7px;display:flex;flex:1;flex-direction:column;gap:4px;min-width:0}
+.category-modal-products .card h3{font-size:11px;line-height:1.3;min-height:2.6em;margin:0;text-align:center;overflow:hidden}
+.category-modal-products .price{font-size:12px;white-space:normal}
+.category-modal-products .sale-price-wrap{margin:0;padding:0;border:0;background:none}
+.category-modal-products .sale-price-line{display:flex;flex-direction:column;align-items:center;gap:1px}
+.category-modal-products .sale-price-current{font-size:13px}
+.category-modal-products .sale-price-old{font-size:10px}
+.category-modal-products .sale-saving-line{display:flex;justify-content:center;align-items:center;gap:4px;flex-wrap:wrap}
+.category-modal-products .sale-saving{font-size:9px;margin:0;display:inline}
+.category-modal-products .sale-saving-line .sale-discount-badge{display:none}
+.category-modal-products .card-add-button{margin-top:auto;width:100%;padding:7px 3px;font-size:10px;line-height:1.25;min-height:32px}
+.product-img .image-discount-badge{position:absolute;top:5px;left:5px;right:auto;z-index:2;padding:3px 6px;border-radius:7px;background:linear-gradient(135deg,#ed3434,#a91616);border:1px solid #ff8585;color:#fff;font-size:10px;font-weight:900;box-shadow:0 2px 6px #0008}
+@media(max-width:380px){
+ .category-modal-products{gap:5px}
+ .category-modal-products .cardbody{padding:5px}
+ .category-modal-products .card h3{font-size:10px}
+ .category-modal-products .sale-price-current{font-size:12px}
+ .category-modal-products .card-add-button{font-size:9px;padding:6px 2px}
+ .product-img .image-discount-badge{font-size:9px;top:3px;right:3px}
+}
+/* Put the AI action directly below uploaded photos, followed by the editable description */
+.product-photo-field .ai-description-button{display:block;width:100%;margin:12px 0 8px}
+.product-photo-field .ai-description-help{display:block;margin:5px 0 10px;line-height:1.6}
+.product-photo-field .ai-description-label{display:block;margin:12px 0 5px}
+.product-photo-field #pdesc{width:100%;display:block;margin:0 0 12px}
+</style>
+
+<style id="arte-final-product-layout">
+.category-modal-products{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important;align-items:stretch!important}
+.category-modal-products>.card{height:auto!important;min-height:0!important;align-self:stretch!important}
+.category-modal-products>.card>.product-img{height:auto!important;min-height:0!important;max-height:none!important;flex:0 0 auto!important;aspect-ratio:1/1!important;padding:0!important;position:relative!important;overflow:hidden!important;background:#20262b!important}
+.category-modal-products>.card>.product-img img{width:100%!important;height:100%!important;max-height:none!important;object-fit:cover!important;object-position:center!important}
+.category-modal-products>.card>.cardbody{padding:7px!important;gap:5px!important;flex:1 1 auto!important}
+.category-modal-products>.card .cardbody h3{font-size:12px!important;line-height:1.35!important;min-height:0!important;max-height:2.7em!important;margin:0!important}
+.category-modal-products>.card .card-price{min-height:0!important;margin:0!important;display:block!important}
+.category-modal-products>.card .sale-price-wrap{display:flex!important;flex-direction:column!important;gap:3px!important;margin:0!important;min-height:0!important}
+.category-modal-products>.card .sale-price-line{display:flex!important;flex-direction:row!important;align-items:baseline!important;justify-content:center!important;gap:7px!important;flex-wrap:wrap!important}
+.category-modal-products>.card .sale-price-current{font-size:14px!important;white-space:nowrap!important}
+.category-modal-products>.card .sale-price-old{font-size:10px!important;color:#f1f3f5!important;text-decoration-color:#ffb36b!important;text-decoration-thickness:2px!important;white-space:nowrap!important}
+.category-modal-products>.card .sale-saving-line{display:flex!important;justify-content:center!important;align-items:center!important;margin:0!important;min-height:0!important}
+.category-modal-products>.card .sale-saving{font-size:10px!important;white-space:nowrap!important}
+.category-modal-products>.card .cardbody{display:flex!important;flex-direction:column!important;height:100%!important}
+.category-modal-products>.card .card-price{margin-top:auto!important}
+.category-modal-products>.card .card-add-button{margin-top:auto!important;padding:7px 4px!important;font-size:11px!important;min-height:34px!important}
+.product-img .image-discount-badge{top:6px!important;right:6px!important;left:auto!important;padding:4px 7px!important;font-size:10px!important}
+.detail-header-actions{display:flex;align-items:center;gap:7px;flex:0 0 auto}
+.share-product-button{padding:9px 11px!important;white-space:nowrap}
+.product-detail-image{width:100%!important;height:min(34vh,260px)!important;max-height:260px!important;object-fit:contain!important}
+.product-photo-field .ai-description-button{display:block!important;width:100%!important;margin:12px 0 8px!important}
+.product-photo-field .ai-description-help{display:block!important;margin:5px 0 10px!important}
+@media(max-width:380px){
+ .category-modal-products{gap:6px!important}
+ .category-modal-products>.card>.cardbody{padding:6px 5px!important}
+ .category-modal-products>.card .sale-price-current{font-size:12px!important}
+ .category-modal-products>.card .sale-price-old{font-size:9px!important;color:#f1f3f5!important;text-decoration-color:#ffb36b!important;text-decoration-thickness:2px!important}
+ .category-modal-products>.card .sale-saving{font-size:9px!important}
+ .category-modal-products>.card .card-add-button{font-size:10px!important;padding:6px 3px!important}
+ .product-img .image-discount-badge{font-size:9px!important}
+}
+</style>
+
+<style id="arte-followup-polish">
+.category-modal-products>.card{display:flex!important;flex-direction:column!important}
+.category-modal-products>.card>.cardbody{display:flex!important;flex:1 1 auto!important;flex-direction:column!important}
+.category-modal-products>.card .card-add-button{margin-top:auto!important;align-self:stretch!important}
+#detailPrice .sale-price-detail .sale-saving-line{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+#detailPrice .sale-price-detail .sale-discount-badge{display:inline-flex!important;font-size:12px;padding:4px 8px}
+#detailPrice .sale-price-old{color:#fff!important;text-decoration-color:#ffb36b!important;text-decoration-thickness:2px!important;font-weight:800!important}
+#detailPrice,.sale-price-current,.sale-price-old,.price{font-variant-numeric:lining-nums}
+</style>
+
+<style id="arte-admin-redesign">
+#adminTab-products>.panel:first-child{padding:18px!important;border-radius:18px!important;background:linear-gradient(155deg,#1c2329,#14191e)!important;border:1px solid #46515b!important;box-shadow:0 8px 24px #0004!important}
+#adminTab-products>.panel:first-child>h3{font-size:21px!important;color:#ffb16d!important;margin:0 0 18px!important;padding-bottom:12px!important;border-bottom:1px solid #39434c!important}
+#adminTab-products #pname,#adminTab-products #pcat,#adminTab-products #pprice,#adminTab-products #psaleprice,#adminTab-products #pavailability,#adminTab-products #pdesc,#adminTab-products #pimages{display:block;width:100%;min-height:46px;margin:7px 0 15px!important;padding:12px 14px!important;border-radius:11px!important;border:1px solid #46515b!important;background:#20272d!important;color:#f7f7f7!important;box-shadow:inset 0 1px 2px #0003!important}
+#adminTab-products textarea#pdesc{min-height:92px;resize:vertical;line-height:1.7}
+#adminTab-products label{display:block;margin:14px 0 5px!important;color:#e9edf1!important;font-size:14px!important;font-weight:700!important}
+#adminTab-products .product-photo-field{margin:15px 0 18px!important;padding:14px!important;border:1px dashed #63717d!important;border-radius:14px!important;background:#1a2025!important}
+#adminTab-products .photo-preview{display:flex;gap:9px;flex-wrap:wrap;align-items:center}
+#adminTab-products .photo-preview img{width:76px!important;height:76px!important;object-fit:cover!important;border-radius:10px!important;border:1px solid #596570!important}
+#adminTab-products .ai-description-help{display:block;margin:7px 0 12px!important;font-size:12px!important}
+#adminTab-products .ai-description-button{display:block;width:100%;margin:12px 0 14px!important;min-height:46px!important;border-radius:11px!important}
+#adminTab-products #productSave{width:100%;min-height:48px;margin:8px 0 0!important;border-radius:11px!important;font-size:16px!important}
+#adminTab-products #cancelEdit{margin:9px 0 0!important}
+#adminTab-products>.panel:nth-child(2){padding:15px!important;border-radius:18px!important}
+#adminProducts.admin-product-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}
+.admin-product-card{min-width:0;overflow:hidden;border:1px solid #424e58;border-radius:14px;background:linear-gradient(150deg,#20272d,#151a1e);box-shadow:0 5px 14px #0003}
+.admin-product-card .admin-product-image{width:100%;height:105px;object-fit:cover;display:block;background:#101519}
+.admin-product-card .admin-product-info{padding:10px;display:flex;flex-direction:column;gap:6px}
+.admin-product-card .admin-product-name{font-weight:800;font-size:13px;line-height:1.5;min-height:2.8em;overflow-wrap:anywhere}
+.admin-product-card .admin-product-price{font-size:13px;color:#ffad62;font-weight:800}
+.admin-product-card .admin-product-meta{font-size:11px;color:#bfc8cf;line-height:1.6}
+.admin-product-card .admin-product-actions{display:flex;gap:6px;margin-top:4px}
+.admin-product-card .admin-product-actions button{flex:1;padding:7px 4px!important;font-size:11px!important;border-radius:8px!important}
+@media(min-width:650px){#adminProducts.admin-product-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.admin-product-card .admin-product-image{height:135px}}
+@media(max-width:360px){#adminProducts.admin-product-grid{gap:7px}.admin-product-card .admin-product-image{height:82px}.admin-product-card .admin-product-info{padding:7px}.admin-product-card .admin-product-name{font-size:11px}}
+</style>
+</head>
+<body>
+<header><div class="brand" id="brandName">Arte Net Store<small id="brandSubtitle">متجر أرتي نت</small></div><div class="header-actions"><button class="secondary cart-icon-button" id="cartButton" onclick="openCart()" aria-label="فتح سلة المشتريات" title="سلة المشتريات"><span class="cart-glyph" aria-hidden="true">🛒</span><span class="cart-badge" id="cartCount">0</span></button></div></header>
+<main class="wrap" id="store">
+<section class="hero"><div><h1 id="heroTitle">كل احتياجات الشبكات في مكان واحد</h1><p id="heroDescription">راوترات، أجهزة شبكات، كاميرات مراقبة، إكسسوارات والمزيد</p><button id="heroButton" onclick="document.getElementById('emptyHomePrompt').scrollIntoView({behavior:'smooth',block:'center'})">تصفح المنتجات</button></div></section>
+<div class="toolbar"><input class="field" id="search" placeholder="ابحث عن منتج..." oninput="render()" onkeydown="if(event.key==='Enter'){render();document.getElementById('emptyHomePrompt').scrollIntoView({behavior:'smooth',block:'center'})}"><button class="search-action" id="searchButton" aria-label="بحث" title="بحث" onclick="render();document.getElementById('emptyHomePrompt').scrollIntoView({behavior:'smooth',block:'center'})">⌕</button><button class="secondary" id="clearSearchButton" onclick="document.getElementById('search').value='';render();msg('تم مسح البحث')">مسح البحث</button></div>
+<div class="cats" id="categories"></div>
+<div class="empty-category-prompt" id="emptyHomePrompt">
+<h3>إختار القسم المطلوب أولآ لعرض منتجاته</h3>
+<button type="button" class="repair-request-button" onclick="openRepairRequest()">طلب صيانة الموبايل</button>
+<a id="otherInquiryLink" class="inquiry-action" href="https://wa.me/201003227963?text=%D8%A3%D8%B1%D8%BA%D8%A8%20%D9%81%D9%8A%20%D8%A7%D9%84%D8%A5%D8%B3%D8%AA%D9%81%D8%B3%D8%A7%D8%B1%20%D8%B9%D9%86%20%D8%B4%D9%8A%D8%A1%20%D8%A2%D8%AE%D8%B1%20%D8%8C%20%D8%A8%D8%AE%D8%B5%D9%88%D8%B5%20%D9%85%D8%AA%D8%AC%D8%B1%20%D8%A2%D8%B1%D8%AA%D9%8A%20%D9%86%D8%AA" target="_blank" rel="noopener"><button type="button">الإستفسار عن شيء آخر</button></a>
+</div>
+<div class="row"><h2 class="section-title" id="products">المنتجات</h2><span class="muted" id="resultCount"></span></div><div class="grid" id="productGrid"></div>
+<section class="panel" id="paymentDetails" style="display:none"><h3 class="section-title" id="paymentTitle">تفاصيل الدفع</h3><div id="paymentNotice"></div></section>
+</main>
+<section class="wrap admin" id="admin"><div class="row"><h2 class="section-title" id="adminTitle">لوحة إدارة المتجر</h2><div class="admin-top-actions"><button class="secondary" onclick="returnToStore()">العودة للمتجر</button><button class="secondary" onclick="adminLogout()">تسجيل الخروج</button></div></div>
+<nav class="admin-tabs" aria-label="أقسام لوحة الإدارة"><button class="admin-tab active" onclick="showAdminTab('orders',this)">📦 الطلبات</button><button class="admin-tab" onclick="showAdminTab('repairs',this)">🛠️ طلبات الصيانة</button><button class="admin-tab" onclick="showAdminTab('products',this)">🛍️ المنتجات</button><button class="admin-tab" onclick="showAdminTab('categories',this)">📂 إدارة الأقسام</button><button class="admin-tab" onclick="showAdminTab('customize',this)">⚙️ تخصيص المتجر والنصوص</button></nav>
+<div class="admin-section" id="adminTab-orders"><div class="panel"><div class="row"><h3>الطلبات</h3><button class="secondary" onclick="loadOrders()">تحديث الطلبات</button></div><div id="ordersList"></div></div></div>
+<div class="admin-section hidden" id="adminTab-repairs"><div class="panel"><div class="row"><h3>طلبات الصيانة</h3><button class="secondary" onclick="loadRepairRequests()">تحديث الطلبات</button></div><div id="repairRequestsList"></div></div></div>
+<div class="admin-section hidden" id="adminTab-products"><div class="panel"><h3>إضافة منتج</h3><input class="field" id="pname" placeholder="اسم المنتج"><select class="field" id="pcat"></select><input class="field" id="pprice" type="number" min="0.01" step="0.01" placeholder="السعر الأصلي بالجنيه"><label for="psaleprice">سعر العرض (اتركه فارغًا إذا لا يوجد عرض)</label><input class="field" id="psaleprice" type="number" min="0.01" step="0.01" placeholder="أدخل سعر العرض فقط"><small class="muted">سيحسب المتجر نسبة الخصم ومقدار التوفير تلقائيًا للعميل.</small><textarea class="field" id="pdesc" rows="3" placeholder="وصف مختصر (يمكنك كتابته يدويًا أو توليده من الصور)"></textarea><label for="pavailability">حالة توفر المنتج</label><select class="field" id="pavailability"><option value="true">متوفر</option><option value="false">غير متوفر</option></select></div><div class="panel"><h3 id="currentProductsTitle">المنتجات الحالية</h3><div id="adminProducts"></div></div></div>
+<div class="admin-section hidden" id="adminTab-categories"><div class="panel"><h3 id="manageCategoriesTitle">إدارة الأقسام</h3><input class="field" id="newcat" placeholder="اسم القسم الجديد"><button onclick="addCategory()">إضافة قسم</button><div id="catAdmin" class="muted"></div></div></div>
+<div class="admin-section hidden" id="adminTab-customize"><div class="panel"><h3 id="settingsTitle">بيانات التواصل والدفع</h3><label>رقم واتساب (بمفتاح الدولة)</label><input class="field" id="wa" placeholder="مثال: 201xxxxxxxxx"><label>بيانات فودافون كاش</label><input class="field" id="vodafone" placeholder="أدخل بيانات الدفع الصحيحة"><label>بيانات InstaPay</label><input class="field" id="instapay" placeholder="أدخل بيانات الدفع الصحيحة"><button onclick="saveSettings()">حفظ الإعدادات</button><p class="muted">يتم حفظ الإعدادات مركزيًا وتظهر لجميع زوار المتجر.</p></div><div class="panel" id="customizePanel"><h3 class="section-title">تخصيص المتجر والنصوص</h3><p class="muted">كل سطر يوضح الجزء الذي ستعدّله. اضغط علامة القلم بجوار العنصر لتغيير هذا العنصر وحده ثم احفظ.</p><div id="customizationItems" class="edit-list"></div></div></div>
+</section>
+<div class="modal category-modal" id="categoryModal"><div class="dialog"><div class="row"><h2 id="categoryModalTitle"></h2><button class="secondary" onclick="closeCategory()">إغلاق</button></div><div id="categoryModalContent"></div></div></div><div class="modal" id="productModal"><div class="dialog product-detail-dialog"><div class="row"><h2 id="detailName"></h2><div class="detail-header-actions"><button type="button" class="secondary share-product-button" onclick="shareCurrentProduct()" aria-label="مشاركة المنتج" title="مشاركة المنتج">مشاركة ↗</button><button class="secondary" onclick="closeProductDetail()">إغلاق</button></div></div><div class="detail-gallery-wrap"><img id="detailMainImage" class="product-detail-image" alt="صورة المنتج"><div id="detailGalleryCount" class="detail-gallery-count"></div><div id="detailThumbs" class="gallery-thumbs"></div></div><div class="detail-info"><h3>تفاصيل المنتج</h3><p id="detailDescription" class="muted"></p><div class="row"><div id="detailPrice" class="price"></div><button id="detailAddButton">أضف للسلة</button></div></div></div></div>
+<div class="modal" id="cartModal"><div class="dialog"><div class="row"><h2 id="cartTitle">سلة المشتريات</h2><button class="secondary" onclick="closeCart()">إغلاق</button></div><section id="cartReview"><div id="cartItems" class="cart-items-grid" style="display:flex!important;flex-flow:row wrap!important;align-items:stretch;justify-content:flex-start;gap:8px;width:100%;"></div><h3 id="total"></h3><button id="beginCheckoutButton" onclick="beginCheckout()">إتمام عملية الشراء</button></section><section id="checkoutStage" class="hidden"><button class="secondary" type="button" onclick="backToCartReview()">العودة للسلة</button><h3>بيانات إتمام الطلب</h3><input class="field" id="customer" placeholder="اسم العميل"><input class="field" id="phone" placeholder="رقم الهاتف"><label for="pay">اختر طريقة الدفع</label><select class="field" id="pay" onchange="paymentChoiceChanged()"><option value="vodafone">فودافون كاش</option><option value="instapay">InstaPay</option><option value="branch">الدفع من الفرع</option></select><div id="paymentChoiceInfo" class="panel" style="display:none"></div><button id="checkoutButton" onclick="sendOrder()">إرسال الطلب عبر واتساب</button><p class="muted" id="orderNote"></p></section></div></div>
+<div class="editor-modal" id="customEditModal"><div class="editor-box"><div class="row"><h3 id="customEditTitle">تعديل</h3><button class="secondary" onclick="closeCustomEditor()">إغلاق</button></div><label id="customEditLabel" for="customEditValue">القيمة الجديدة</label><textarea class="field" id="customEditValue" rows="3"></textarea><p class="muted" id="customEditHint"></p><div class="row"><button onclick="saveSingleCustomization()">حفظ التعديل</button><button class="secondary" onclick="closeCustomEditor()">إلغاء</button></div></div></div>
+<div class="modal" id="repairRequestModal" role="dialog" aria-modal="true" aria-labelledby="repairRequestTitle"><div class="dialog"><div class="row"><h2 id="repairRequestTitle">طلب صيانة الموبايل</h2><button type="button" class="secondary" onclick="closeRepairRequest()">إغلاق</button></div><p class="muted">اكتب بياناتك وتفاصيل الصيانة، وسنستقبل طلبك على واتساب.</p><form id="repairRequestForm" onsubmit="sendRepairRequest(event)"><label for="repairCustomerName">الاسم</label><input class="field" id="repairCustomerName" name="name" autocomplete="name" required placeholder="اكتب اسمك"><label for="repairCustomerPhone">رقم التليفون</label><input class="field" id="repairCustomerPhone" name="phone" type="tel" inputmode="tel" autocomplete="tel" required placeholder="مثال: 01xxxxxxxxx"><label for="repairRequestType">نوع الطلب</label><select class="field" id="repairRequestType" name="requestType"><option value="صيانة">صيانة</option><option value="الاستفسار عن سعر الصيانة">الاستفسار عن سعر الصيانة</option></select><label for="repairDeviceModel">نوع الموبايل / الموديل</label><input class="field" id="repairDeviceModel" name="device" placeholder="مثال: Samsung A24"><label for="repairDetails">نوع الصيانة أو العطل المطلوب</label><textarea class="field" id="repairDetails" name="details" required placeholder="اكتب العطل أو نوع الصيانة التي تريد معرفة سعرها"></textarea><button class="repair-submit" type="submit">تأكيد الطلب وإرساله على واتساب</button></form></div></div>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+<footer id="footerText"><span id="footerLabel">Arte Net Store · متجر أرتي نت</span>
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const SUPABASE_URL='https://zwkkofvhvtwrglxpcvbe.supabase.co';
+const SUPABASE_KEY='sb_publishable_Y0VedBb8008dmSpQhRz6Ww_wSZJF9i2';
+const db=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true,storage:window.localStorage}});
+const ADMIN_PORTAL = new URLSearchParams(location.search).get('admin') === '1';
+let cats=[], products=[], cart=JSON.parse(localStorage.getItem('ans_cart')||'[]'), settings={}, active='', editingId=null, adminUser=null, selectedProductPhotos=[], existingProductImages=[], adminHistoryState=false;
+const $=id=>document.getElementById(id), esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const money=n=>Number(n||0).toLocaleString('en-US',{maximumFractionDigits:2})+' ج.م';
+// Merge any duplicate legacy cart rows and keep quantities as positive integers.
+function normalizeCart(items){const merged=new Map();(Array.isArray(items)?items:[]).forEach(row=>{if(!row||row.id==null)return;const qty=Math.max(1,Math.floor(Number(row.qty)||1));const key=String(row.id);const old=merged.get(key);if(old)old.qty+=qty;else merged.set(key,{id:row.id,qty});});return [...merged.values()];}
+cart=normalizeCart(cart);localStorage.setItem('ans_cart',JSON.stringify(cart));
+let toastTimer=null;function msg(t){const el=$('toast');if(!el){alert(t);return}el.textContent=t;el.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.classList.remove('show'),2800)} function saveCart(){localStorage.setItem('ans_cart',JSON.stringify(cart))}
+let overlayBackState=null;
+function pushPageState(kind){history.pushState({artePage:kind},'',location.pathname+location.search+'#'+kind);overlayBackState=kind;}
+function closeTopOverlay(){if($('repairRequestModal')?.classList.contains('show')){$('repairRequestModal').classList.remove('show');return true;}if($('customEditModal')?.classList.contains('show')){$('customEditModal').classList.remove('show');editingCustomizationKey=null;return true;}if($('productModal')?.classList.contains('show')){$('productModal').classList.remove('show');return true;}if($('cartModal')?.classList.contains('show')){$('cartModal').classList.remove('show');return true;}if($('adminLogin')?.classList.contains('show')){$('adminLogin').classList.remove('show');$('admin').classList.remove('show');return true;}return false;}
+
+async function loadStore(){
+  $('productGrid').innerHTML='<p class="muted">جارٍ تحميل المنتجات...</p>';
+  const [cr,pr,sr]=await Promise.all([db.from('categories').select('*').eq('is_active',true).order('sort_order'),db.from('products').select('*').eq('is_active',true).order('created_at',{ascending:false}),db.from('store_settings').select('*').limit(1).maybeSingle()]);
+  if(cr.error||pr.error||sr.error){const details=[cr.error&&('الأقسام: '+cr.error.message),pr.error&&('المنتجات: '+pr.error.message),sr.error&&('الإعدادات: '+sr.error.message)].filter(Boolean).join(' — ');$('productGrid').innerHTML='<p class="muted">تعذر تحميل بيانات المتجر: '+esc(details)+'</p><button class="secondary" onclick="loadStore().catch(e=>msg(e.message))">إعادة المحاولة</button>';console.error('Store data loading failed:',cr.error,pr.error,sr.error);return}
+  cats=cr.data||[];products=pr.data||[];settings=sr.data||{};if(active&&!cats.some(c=>String(c.id)===String(active)))active='';
+  const sharedProductId=new URLSearchParams(location.search).get('product');
+  if(sharedProductId&&!window.sharedProductOpened){
+    const sharedProduct=products.find(p=>String(p.id)===String(sharedProductId));
+    if(sharedProduct){
+      window.sharedProductOpened=true;
+      active=String(sharedProduct.category_id||'');
+      render();
+      openCategory(active);
+      openProductDetail(sharedProduct.id);
+    }
+  }
+  applyStoreSettings();
+  $('brandName').childNodes[0].textContent=settings.store_name||'Arte Net Store';$('wa').value=settings.whatsapp_number||'201003227963';if($('otherInquiryLink'))$('otherInquiryLink').href='https://wa.me/'+(settings.whatsapp_number||'201003227963').replace(/\D/g,'')+'?text='+encodeURIComponent('أرغب في الإستفسار عن شيء آخر ، بخصوص متجر آرتي نت');$('vodafone').value=settings.vodafone_cash||'';$('instapay').value=settings.instapay||'';
+  render();
+}
+function setText(id,value){const el=$(id);if(el&&value!==null&&value!==undefined&&value!=='')el.textContent=value;}
+function applyStoreSettings(){
+ setText('brandSubtitle',settings.store_subtitle||'متجر أرتي نت');
+ setText('heroTitle',settings.hero_title||'كل احتياجات الشبكات في مكان واحد');
+ setText('heroDescription',settings.hero_description||'راوترات، أجهزة شبكات، كاميرات مراقبة، إكسسوارات والمزيد');
+ setText('heroButton',settings.hero_button_text||'تصفح المنتجات');
+ $('search').placeholder=settings.search_placeholder||'ابحث عن منتج...';
+ setText('clearSearchButton',settings.clear_search_text||'مسح البحث');
+ setText('products',settings.products_title||'المنتجات');
+ setText('paymentTitle',settings.payment_title||'طرق الدفع');
+ setText('paymentDescription',settings.payment_description||'فودافون كاش وInstaPay — بيانات الدفع تُضاف من لوحة الإدارة بعد إدخال البيانات الصحيحة. لا توجد بيانات دفع افتراضية.');
+ setText('cartTitle',settings.cart_title||'سلة المشتريات');
+ setText('checkoutButton',settings.checkout_button_text||'إرسال الطلب عبر واتساب');
+ setText('footerLabel',settings.footer_text||'Arte Net Store · متجر أرتي نت');
+ if(settings.primary_color&&/^#[0-9a-fA-F]{6}$/.test(settings.primary_color))document.documentElement.style.setProperty('--orange',settings.primary_color);
+ if(settings.background_color&&/^#[0-9a-fA-F]{6}$/.test(settings.background_color))document.documentElement.style.setProperty('--bg',settings.background_color);
+}
+const customizationFields=[
+ {key:'store_name',label:'اسم المتجر',type:'text',fallback:'Arte Net Store'},
+ {key:'store_subtitle',label:'النص أسفل اسم المتجر',type:'text',fallback:'متجر أرتي نت'},
+ {key:'hero_title',label:'العنوان الرئيسي',type:'text',fallback:'كل احتياجات الشبكات في مكان واحد'},
+ {key:'hero_description',label:'وصف الواجهة الرئيسية',type:'textarea',fallback:'راوترات، أجهزة شبكات، كاميرات مراقبة، إكسسوارات والمزيد'},
+ {key:'hero_button_text',label:'نص زر تصفح المنتجات',type:'text',fallback:'تصفح المنتجات'},
+ {key:'search_placeholder',label:'النص داخل مربع البحث',type:'text',fallback:'ابحث عن منتج...'},
+ {key:'clear_search_text',label:'نص زر مسح البحث',type:'text',fallback:'مسح البحث'},
+ {key:'products_title',label:'عنوان قسم المنتجات',type:'text',fallback:'المنتجات'},
+ {key:'payment_title',label:'عنوان قسم الدفع',type:'text',fallback:'طرق الدفع'},
+ {key:'payment_description',label:'وصف طرق الدفع',type:'textarea',fallback:'فودافون كاش وInstaPay'},
+ {key:'cart_title',label:'عنوان السلة',type:'text',fallback:'سلة المشتريات'},
+ {key:'checkout_button_text',label:'نص زر إرسال الطلب',type:'text',fallback:'إرسال الطلب عبر واتساب'},
+ {key:'footer_text',label:'النص أسفل المتجر',type:'text',fallback:'Arte Net Store · متجر أرتي نت'},
+ {key:'primary_color',label:'اللون الأساسي',type:'color',fallback:'#f58220'},
+ {key:'background_color',label:'لون خلفية المتجر',type:'color',fallback:'#101316'}
+];
+let editingCustomizationKey=null;
+function customizationValue(field){return settings[field.key]??field.fallback;}
+function fillCustomizationForm(){const host=$('customizationItems');if(!host)return;host.innerHTML=customizationFields.map(f=>`<div class="edit-row"><div class="edit-meta"><strong>${esc(f.label)}</strong><small>${esc(String(customizationValue(f)))}</small></div><button class="pencil" title="تعديل ${esc(f.label)}" aria-label="تعديل ${esc(f.label)}" onclick="openCustomEditor('${f.key}')">✎</button></div>`).join('');}
+function openCustomEditor(key){const f=customizationFields.find(x=>x.key===key);if(!f)return;pushPageState('custom-edit');editingCustomizationKey=key;$('customEditTitle').textContent='تعديل: '+f.label;$('customEditLabel').textContent=f.label;$('customEditValue').value=customizationValue(f);$('customEditValue').type=f.type==='color'?'text':'text';$('customEditHint').textContent=f.type==='color'?'اكتب كود اللون بصيغة HEX مثل #f58220':(f.type==='textarea'?'يمكنك كتابة نص متعدد الأسطر':'اكتب النص الجديد ثم اضغط حفظ التعديل');$('customEditValue').rows=f.type==='textarea'?4:2;$('customEditModal').classList.add('show');}
+function closeCustomEditor(){editingCustomizationKey=null;$('customEditModal').classList.remove('show');if(location.hash==='#custom-edit')history.back();}
+async function saveSingleCustomization(){if(!adminUser)return msg('سجل دخول المدير أولاً');const f=customizationFields.find(x=>x.key===editingCustomizationKey);if(!f)return;const value=$('customEditValue').value.trim();if(f.type==='color'&&!/^#[0-9a-fA-F]{6}$/.test(value))return msg('اكتب اللون بصيغة HEX مثل #f58220');const payload={[f.key]:value};const {data,error}=await db.from('store_settings').select('id').limit(1).maybeSingle();if(error)return msg('تعذر قراءة الإعدادات: '+error.message);const result=data?await db.from('store_settings').update(payload).eq('id',data.id):await db.from('store_settings').insert({id:1,...payload});if(result.error)return msg('تعذر حفظ التعديل: '+result.error.message);await loadStore();fillCustomizationForm();closeCustomEditor();msg('تم حفظ تعديل '+f.label+' وظهر للزوار');}
+function openAdminHistory(){if(!adminHistoryState){history.pushState({arteAdmin:true},'', '#admin');adminHistoryState=true;}}
+function returnToStore(fromPop=false){
+ if(ADMIN_PORTAL){location.href=location.pathname;return;}
+ $('admin').classList.remove('show');$('store').classList.remove('hidden');window.scrollTo({top:0,behavior:'smooth'});
+ if(!fromPop&&adminHistoryState){adminHistoryState=false;if(location.hash==='#admin')history.back();}
+}
+function exitAdminPortal(){if(ADMIN_PORTAL){location.href=location.pathname;return;} $('adminLogin').classList.remove('show');$('admin').classList.remove('show');}
+window.addEventListener('popstate',()=>{
+ if(closeTopOverlay())return;
+ if($('admin').classList.contains('show')){adminHistoryState=false;returnToStore(true);return;}
+ if(active){active='';render();window.scrollTo({top:0,behavior:'smooth'});return;}
+});
+function effectivePrice(p){const base=Number(p?.price||0),sale=Number(p?.sale_price);return Number.isFinite(sale)&&sale>0&&sale<base?sale:base}
+function discountPercent(p){const base=Number(p?.price||0),sale=effectivePrice(p);return sale<base&&base>0?Math.round((base-sale)/base*100):0}
+function salePriceMarkup(p,detail=false){const base=Number(p?.price||0),current=effectivePrice(p);if(current>=base)return `<span class="price">${money(base)}</span>`;const percent=discountPercent(p),saving=base-current;return `<div class="${detail?'sale-price-detail':'sale-price-wrap'}"><div class="sale-price-line"><strong class="sale-price-current">${money(current)}</strong><span class="sale-price-old">${money(base)}</span></div><div class="sale-saving-line"><small class="sale-saving">وفّرت ${money(saving)}</small><span class="sale-discount-badge">خصم ${percent}%</span></div></div>`}
+function saleCartMarkup(p){const base=Number(p?.price||0),current=effectivePrice(p);if(current>=base)return money(base);return `<span class="sale-price-cart"><b class="sale-price-current">${money(current)}</b><del class="sale-price-old">${money(base)}</del><span class="sale-discount-badge">-${discountPercent(p)}%</span></span>`}
+function isProductAvailable(p){return p?.is_available!==false}
+function getProductImages(p){let list=p?.image_urls??[];if(typeof list==='string'){try{list=JSON.parse(list)}catch(_){list=list?[list]:[]}}if(!Array.isArray(list))list=[];list=list.filter(x=>typeof x==='string'&&x.trim());if(p?.image_url&&!list.includes(p.image_url))list.unshift(p.image_url);return [...new Set(list)];}
+function openProductDetail(id){const p=products.find(x=>String(x.id)===String(id));if(!p)return;window.currentDetailProductId=p.id;pushPageState('product');const imgs=getProductImages(p);window.currentDetailImages=imgs.length?imgs:[''];window.currentDetailImageIndex=0;$('detailMainImage').ontouchstart=e=>{window.detailTouchX=e.changedTouches[0].screenX};$('detailMainImage').ontouchend=e=>{const dx=e.changedTouches[0].screenX-(window.detailTouchX||0);if(Math.abs(dx)>35&&window.currentDetailImages.length>1)setDetailImage((window.currentDetailImageIndex+(dx<0?1:-1)+window.currentDetailImages.length)%window.currentDetailImages.length)};$('detailName').textContent=p.name;$('detailDescription').textContent=p.description||'لا توجد تفاصيل إضافية لهذا المنتج.';$('detailPrice').innerHTML=salePriceMarkup(p,true);$('detailMainImage').src=imgs[0]||'';$('detailMainImage').style.display=imgs[0]?'block':'none';$('detailThumbs').innerHTML=imgs.length>1?imgs.map((u,i)=>`<img src="${esc(u)}" class="${i===0?'active':''}" onclick="setDetailImage(${i})" alt="صورة ${i+1}">`).join(''):'';$('detailGalleryCount').textContent=imgs.length>1?`اسحب الصور أو اختر صورة — ${imgs.length} صور`:(imgs.length?'صورة المنتج':'لا توجد صورة');$('detailAddButton').disabled=false;$('detailAddButton').textContent=isProductAvailable(p)?'أضف للسلة':'غير متوفر حاليًا';$('detailAddButton').onclick=()=>addCart(p.id);$('productModal').classList.add('show');}
+function setDetailImage(i){const u=window.currentDetailImages?.[i];if(!u)return;window.currentDetailImageIndex=i;$('detailMainImage').src=u;[...$('detailThumbs').querySelectorAll('img')].forEach((x,n)=>x.classList.toggle('active',n===i));}
+function closeProductDetail(){$('productModal').classList.remove('show');if(location.hash==='#product')history.back();}
+async function shareCurrentProduct(){
+ const p=products.find(x=>String(x.id)===String(window.currentDetailProductId));
+ if(!p)return msg('تعذر تحديد المنتج المطلوب مشاركته');
+ const name=p.name||'منتج من Arte Net Store';
+ const shareUrl=new URL(location.href);
+ shareUrl.searchParams.set('product',String(p.id));
+ shareUrl.hash='';
+ const url=shareUrl.toString();
+ try{
+  if(navigator.share) await navigator.share({title:name,url});
+  else if(navigator.clipboard?.writeText){await navigator.clipboard.writeText(url);msg('تم نسخ رابط المنتج المباشر لمشاركته');}
+  else window.open('https://wa.me/?text='+encodeURIComponent(url),'_blank','noopener');
+ }catch(e){if(e?.name!=='AbortError')msg('تعذرت المشاركة من هذا المتصفح');}
+}
+function previewProductPhotos(){selectedProductPhotos=[...($('pimages').files||[])];drawPhotoPreview();}
+function removeProductPhoto(index){selectedProductPhotos.splice(index,1);const dt=new DataTransfer();selectedProductPhotos.forEach(f=>dt.items.add(f));$('pimages').files=dt.files;drawPhotoPreview();}
+function removeExistingProductPhoto(index){existingProductImages.splice(index,1);drawPhotoPreview();}
+function drawPhotoPreview(){const host=$('photoPreview');if(!host)return;const old=existingProductImages.map((url,i)=>`<span class="photo-thumb"><img src="${esc(url)}" alt="الصورة الحالية ${i+1}"><button type="button" aria-label="حذف الصورة الحالية" title="حذف الصورة الحالية" onclick="removeExistingProductPhoto(${i})">×</button></span>`).join('');const fresh=selectedProductPhotos.map((f,i)=>`<span class="photo-thumb"><img src="${URL.createObjectURL(f)}" alt="معاينة الصورة الجديدة"><button type="button" aria-label="حذف الصورة الجديدة" title="حذف الصورة الجديدة" onclick="removeProductPhoto(${i})">×</button></span>`).join('');host.innerHTML=old+fresh;}
+function selectCategory(id){
+ const next=String(id);
+ const selected=cats.find(c=>String(c.id)===next);
+ if(!selected)return;
+ if(active!==next)pushPageState('category');
+ active=next;
+ render();
+ openCategory(next);
+}
+function openCategory(id){
+ const selected=cats.find(c=>String(c.id)===String(id));
+ if(!selected)return;
+ const q=$('search').value.trim().toLowerCase();
+ const list=products.filter(p=>String(p.category_id)===String(id)&&(`${p.name} ${p.description||''}`).toLowerCase().includes(q));
+ $('categoryModalTitle').textContent=selected.name;
+ $('categoryModalContent').innerHTML=list.length?'<div class="category-modal-products">'+list.map(p=>{const imgs=getProductImages(p);const cover=imgs[0];return `<article class="card" onclick="openProductDetail(${p.id})" role="button" tabindex="0"><div class="product-img">${cover?`<img src="${esc(cover)}" alt="${esc(p.name)}" loading="lazy">`:'📦'}${effectivePrice(p)<Number(p.price||0)?`<span class="image-discount-badge">خصم ${discountPercent(p)}%</span>`:''}</div><div class="cardbody"><h3>${esc(p.name)}</h3><div class="card-price">${salePriceMarkup(p)}</div><button class="card-add-button" onclick="event.stopPropagation();addCart(${p.id})">${isProductAvailable(p)?'أضف للسلة':'غير متوفر'}</button></div></article>`}).join('')+'</div>':'<div class="category-empty-message">هذا القسم فارغ حاليًا أو نفدت منتجاتة</div>';
+ $('categoryModal').classList.add('show');
+}
+function closeCategory(){ $('categoryModal').classList.remove('show'); if(location.hash==='#category')history.back(); }
+function render(){
+ $('categories').innerHTML=cats.map(c=>`<button type="button" class="category-chip ${active===String(c.id)?'selected':''}" onclick="selectCategory('${String(c.id).replace(/\\\\/g,'\\\\\\\\').replace(/'/g,"\\\\'")}')"><span>▣</span>${esc(c.name)}</button>`).join('');
+ const q=$('search').value.trim().toLowerCase();const selectedCategory=cats.find(c=>String(c.id)===String(active));const list=active?products.filter(p=>String(p.category_id)===String(active)&&(`${p.name} ${p.description||''}`).toLowerCase().includes(q)):[];
+ $('products').textContent='المنتجات';
+ $('products').parentElement.style.display=active?'flex':'none';
+ $('resultCount').textContent='';
+ $('productGrid').innerHTML='';
+ $('emptyHomePrompt').style.display=active?'none':'flex';
+ const cartQty=cart.reduce((a,b)=>a+b.qty,0);$('cartCount').textContent=cartQty;
+ $('pcat').innerHTML=cats.map(c=>`<option value="${c.id}">${esc(c.name)}</option>`).join('');renderAdmin();
+}
+function addCart(id){let p=products.find(x=>String(x.id)===String(id));if(!p)return msg('المنتج غير موجود');if(!isProductAvailable(p))return msg('هذا المنتج غير متوفر حاليًا');let existing=cart.find(x=>String(x.id)===String(id));if(existing)return msg('المنتج '+p.name+' تمت إضافته إلى السلة بالفعل');cart.push({id:p.id,qty:1});saveCart();render();msg('تمت إضافة '+p.name+' إلى السلة');}
+function openCart(){pushPageState('cart');$('cartModal').classList.add('show');$('cartReview').classList.remove('hidden');$('checkoutStage').classList.add('hidden');drawCart()} function closeCart(){$('cartModal').classList.remove('show');if(location.hash==='#cart')history.back()}
+function beginCheckout(){if(!cart.length)return msg('السلة فارغة');$('cartReview').classList.add('hidden');$('checkoutStage').classList.remove('hidden');paymentChoiceChanged();}
+function backToCartReview(){$('checkoutStage').classList.add('hidden');$('cartReview').classList.remove('hidden')}
+function drawCart(){let total=0;$('cartItems').innerHTML=cart.map(x=>{let p=products.find(p=>p.id===x.id);if(!p)return '';const unit=effectivePrice(p);total+=unit*x.qty;const img=getProductImages(p)[0];return `<div class="cart-line"><div class="cart-line-image" role="button" tabindex="0" title="عرض تفاصيل المنتج" onclick="openCartProduct(${p.id})">${img?`<img src="${esc(img)}" alt="${esc(p.name)}">`:'📦'}</div><div class="cart-line-info"><strong role="button" tabindex="0" title="عرض المنتج في قسمه" onclick="openCartProduct(${p.id})">${esc(p.name)}</strong><small>${saleCartMarkup(p)} × ${x.qty}</small><b>${money(unit*x.qty)}</b><div class="cart-line-actions"><span class="cart-qty-label">الكمية</span><button class="secondary" aria-label="تقليل الكمية" title="تقليل الكمية" onclick="changeCartQty(${p.id},-1)">−</button><span class="cart-qty-value">${x.qty}</span><button class="secondary" aria-label="زيادة الكمية" title="زيادة الكمية" onclick="changeCartQty(${p.id},1)">+</button><button class="danger" onclick="removeCart(${p.id})">حذف</button></div></div></div>`}).join('')||'<p>السلة فارغة</p>';$('total').textContent='الإجمالي: '+money(total);$('beginCheckoutButton').disabled=!cart.length}
+function openCartProduct(id){const p=products.find(x=>String(x.id)===String(id));if(!p)return msg('المنتج غير موجود');$('cartModal').classList.remove('show');active=String(p.category_id||'');render();openCategory(active);openProductDetail(p.id);}
+function changeCartQty(id,delta){const item=cart.find(x=>String(x.id)===String(id));if(!item)return;const current=Math.max(1,Math.floor(Number(item.qty)||1));const next=Math.max(1,current+Number(delta));if(next===current&&Number(delta)<0)return msg('أقل كمية للمنتج هي قطعة واحدة، استخدم زر حذف لإزالته من السلة');item.qty=next;cart=normalizeCart(cart);saveCart();render();drawCart()}
+function removeCart(id){cart=cart.filter(x=>String(x.id)!==String(id));saveCart();render();drawCart()}
+
+function cartTotal(){return cart.reduce((sum,x)=>{const p=products.find(p=>p.id===x.id);return sum+(p?effectivePrice(p)*x.qty:0)},0)}
+function paymentChoiceChanged(){const choice=$('pay').value,box=$('paymentChoiceInfo'),total=cartTotal();box.style.display='block';if(choice==='vodafone'){box.innerHTML=`<b>فودافون كاش</b><p>رقم التحويل: <b>01003227963</b></p><p>إجمالي الطلب: <b>${money(total)}</b></p><p class="muted">اضغط للانتقال إلى شاشة الاتصال بكود التحويل. راجع الرقم والمبلغ وأكد العملية بنفسك.</p><button type="button" onclick="openVodafoneTransfer()">الدفع فودافون كاش</button>`}else if(choice==='instapay'){box.innerHTML=`<b>إنستاباي</b><p>إجمالي الطلب: <b>${money(total)}</b></p><p class="muted">رابط الدفع الخاص بآرتي نت. الرابط لا يمرر المبلغ تلقائيًا؛ راجع المبلغ داخل التطبيق قبل التأكيد.</p><button type="button" onclick="window.open('https://ipn.eg/S/mohamed_qasem/instapay/7w1lRL','_blank')">الدفع إنستاباي</button>`}else{box.innerHTML=`<b>الدفع من الفرع</b><p>الفرع الأول: جماجمون، شارع مسجد الرحمة، بجوار عيادة الدكتور مصطفى خطاب.</p><p>الفرع الثاني: جماجمون، شارع الموقف، أمام فرن الفينو.</p>`}}
+function openVodafoneTransfer(){const amount=Math.round(cartTotal());if(amount<=0)return msg('إجمالي الطلب غير صحيح');const uri='tel:'+encodeURIComponent('*9*7*01003227963*'+amount+'#');window.location.href=uri}
+async function sendOrder(){if(!cart.length)return msg('السلة فارغة');let name=$('customer').value.trim(),phone=$('phone').value.trim(),address='غير مطلوب';if(!name||!phone)return msg('أكمل اسم العميل ورقم الهاتف');const choice=$('pay').value;const paymentLabel=choice==='vodafone'?'فودافون كاش':choice==='instapay'?'InstaPay':'الدفع من الفرع';let {data,error}=await db.rpc('submit_store_order',{p_customer_name:name,p_customer_phone:phone,p_customer_address:address,p_payment_method:paymentLabel,p_items:cart.map(x=>{const product=products.find(p=>String(p.id)===String(x.id));return {product_id:x.id,quantity:x.qty,product_name:product?.name||'',unit_price:effectivePrice(product)}})});if(error){console.error(error);return msg('تعذر تسجيل الطلب: '+error.message)}let lines=cart.map(x=>{let p=products.find(p=>p.id===x.id);const unit=effectivePrice(p);return `${p?.name} × ${x.qty} = ${money(unit*x.qty)}${discountPercent(p)?` (خصم ${discountPercent(p)}%، السعر قبل الخصم ${money(p.price)})`:''}`}).join('\\n');let total=cartTotal();let text=`طلب شراء جديد من Arte Net Store\\nالاسم: ${name}\\nالهاتف: ${phone}\\nالدفع: ${paymentLabel}\\nالإجمالي: ${money(total)}\\n${lines}`;const wa=(settings.whatsapp_number||'201003227963').replace(/\\D/g,'');window.open('https://wa.me/'+wa+'?text='+encodeURIComponent(text),'_blank');if(choice==='vodafone')openVodafoneTransfer();else if(choice==='instapay')window.open('https://ipn.eg/S/mohamed_qasem/instapay/7w1lRL','_blank');cart=[];saveCart();render();closeCart();msg('تم تسجيل الطلب رقم '+data+'، أكمل الدفع في الوسيلة المختارة')}
+
+function openRepairRequest(){pushPageState('repair-request');$('repairRequestModal').classList.add('show');}
+function closeRepairRequest(){$('repairRequestModal').classList.remove('show');if(location.hash==='#repair-request')history.back();}
+async function sendRepairRequest(event){event.preventDefault();const name=$('repairCustomerName').value.trim(),phone=$('repairCustomerPhone').value.trim(),requestType=$('repairRequestType').value,device=$('repairDeviceModel').value.trim(),details=$('repairDetails').value.trim();if(!name||!phone||!details)return msg('من فضلك أكمل الاسم ورقم التليفون وتفاصيل الصيانة');const message=`طلب ${requestType} من Arte Net Store\nالاسم: ${name}\nرقم التليفون: ${phone}\nنوع الموبايل: ${device||'لم يحدد'}\nالتفاصيل: ${details}`;const whatsappNumber='201063983329';const url='https://wa.me/'+whatsappNumber+'?text='+encodeURIComponent(message);window.open(url,'_blank','noopener');const {error}=await db.from('repair_requests').insert({customer_name:name,phone:phone,request_type:requestType,device_model:device||null,details:details});if(error){console.error('Repair request save failed:',error);msg('تم فتح واتساب، لكن تعذر حفظ الطلب في لوحة الإدارة: '+error.message);return;}msg('تم تسجيل طلب الصيانة وفتح واتساب');$('repairRequestForm').reset();closeRepairRequest();}
+
+function toggleAdmin(){if(adminUser){openAdminHistory();$('store').classList.add('hidden');$('admin').classList.add('show');window.scrollTo({top:0,behavior:'smooth'});return} $('admin').classList.add('show');pushPageState('admin-login');$('adminLogin').classList.add('show')}
+async function verifyAdminUser(user){if(!user)return false;const check=await db.from('store_admins').select('user_id').eq('user_id',user.id).maybeSingle();if(check.error){console.error('Admin verification failed:',check.error);msg('تعذر التحقق من صلاحية المدير: '+check.error.message);return false;}if(!check.data)return false;adminUser=user;return true;}
+async function restoreAdminSession(){const {data,error}=await db.auth.getSession();if(error){console.error('Session restore failed:',error);return;}const user=data?.session?.user;if(user){const ok=await verifyAdminUser(user);if(ok){console.info('Admin session restored');}}}
+async function adminLogin(){let email=$('adminEmail').value.trim(),password=$('adminPassword').value;let {data,error}=await db.auth.signInWithPassword({email,password});if(error)return msg('تعذر تسجيل الدخول: '+error.message);const ok=await verifyAdminUser(data.user);if(!ok){await db.auth.signOut();adminUser=null;return msg('تم تسجيل الدخول لكن الحساب غير مسجل كمدير للمتجر')}$('adminLogin').classList.remove('show');if(!ADMIN_PORTAL)openAdminHistory();$('store').classList.add('hidden');$('admin').classList.add('show');renderAdmin();await loadOrders()}
+async function adminLogout(){
+ await db.auth.signOut();adminUser=null;
+ if(ADMIN_PORTAL){$('store').classList.add('hidden');$('admin').classList.add('show');$('adminLogin').classList.add('show');}
+ else{$('admin').classList.remove('show');$('store').classList.remove('hidden');$('adminLogin').classList.remove('show');}
+}
+
+async function fileToGeminiImage(file){
+ return new Promise((resolve,reject)=>{
+  const reader=new FileReader();
+  reader.onload=()=>{const value=String(reader.result||'');const match=value.match(/^data:(image\/[a-zA-Z0-9.+-]+);base64,(.+)$/);if(!match)return reject(new Error('تعذر قراءة إحدى الصور'));resolve({mimeType:match[1],data:match[2]});};
+  reader.onerror=()=>reject(new Error('تعذر قراءة الصورة'));reader.readAsDataURL(file);
+ });
+}
+async function generateProductDescription(){
+ if(!adminUser)return msg('سجل دخول المدير أولاً');
+ const files=selectedProductPhotos.length?selectedProductPhotos:[...($('pimages')?.files||[])];
+ const urls=[...existingProductImages];
+ if(!files.length&&!urls.length)return msg('اختر صورة واحدة على الأقل أولاً');
+ const button=$('aiDescriptionButton');const old=button.textContent;button.disabled=true;button.textContent='جارٍ تحليل الصور وكتابة الوصف...';
+ try{
+  const images=[];
+  for(const file of files){if(!/^image\/(png|jpeg|webp)$/i.test(file.type))continue;if(file.size>5*1024*1024)throw new Error('حجم الصورة أكبر من 5 ميجابايت');images.push(await fileToGeminiImage(file));}
+  const {data,error}=await db.functions.invoke('generate-product-description',{body:{productName:$('pname').value.trim(),images,imageUrls:urls}});
+  if(error){let detail=error.message||'تعذر الاتصال بخدمة الذكاء الاصطناعي';try{const response=error.context;if(response&&typeof response.clone==='function'){const payload=await response.clone().json();if(payload?.error)detail=payload.error;else if(payload?.message)detail=payload.message;detail+=response.status?' (HTTP '+response.status+')':'';}}catch(_){}throw new Error(detail)}
+  const description=String(data?.description||'').trim();
+  if(!description)throw new Error(data?.error||'لم يتم إنشاء وصف. حاول بصورة أوضح.');
+  $('pdesc').value=description;
+  msg('تم إنشاء وصف مقترح. راجعه وعدّله قبل حفظ المنتج.');
+ }catch(error){console.error('AI product description failed:',error);msg('تعذر إنشاء الوصف: '+(error?.message||'خطأ غير معروف'));}
+ finally{button.disabled=false;button.textContent=old;}
+}
+async function addProduct(){if(!adminUser)return msg('سجل دخول المدير أولاً');let name=$('pname').value.trim(),price=Number($('pprice').value),category_id=Number($('pcat').value),description=$('pdesc').value.trim(),saleInput=$('psaleprice').value.trim(),sale_price=saleInput===''?null:Number(saleInput);if(!name||!price||!category_id)return msg('أدخل الاسم والسعر والقسم');if(sale_price!==null&&(!Number.isFinite(sale_price)||sale_price<=0||sale_price>=price))return msg('سعر العرض يجب أن يكون أكبر من صفر وأقل من السعر الأصلي');let uploadedUrls=[];const files=selectedProductPhotos.length?selectedProductPhotos:[...($('pimages')?.files||[])];for(const file of files){if(file.size>5*1024*1024)return msg('كل صورة يجب ألا يتجاوز حجمها 5 ميجابايت');const path=Date.now()+'-'+Math.random().toString(36).slice(2)+'-'+file.name.replace(/[^\w.\-]/g,'_');const up=await db.storage.from('products').upload(path,file,{upsert:false});if(up.error)return msg('فشل رفع صورة: '+up.error.message);uploadedUrls.push(db.storage.from('products').getPublicUrl(path).data.publicUrl)}const finalImages=[...existingProductImages,...uploadedUrls];
+let payload={name,price,sale_price,category_id,description,is_active:true,is_available:$('pavailability').value==='true'};if(editingId){payload.image_url=finalImages[0]||null;payload.image_urls=finalImages;}else if(uploadedUrls.length){payload.image_url=uploadedUrls[0];payload.image_urls=uploadedUrls;}let result=editingId?await db.from('products').update(payload).eq('id',editingId):await db.from('products').insert(payload);let savedWithoutGallery=false;if(result.error&&String(result.error.message).includes('image_urls')){const fallback={...payload};delete fallback.image_urls;result=editingId?await db.from('products').update(fallback).eq('id',editingId):await db.from('products').insert(fallback);savedWithoutGallery=!result.error;}if(result.error)return msg('تعذر حفظ المنتج: '+result.error.message);editingId=null;selectedProductPhotos=[];existingProductImages=[];$('photoPreview').innerHTML='';$('pname').value=$('pprice').value=$('psaleprice').value=$('pdesc').value='';$('pavailability').value='true';$('pimages').value='';$('productSave').textContent='إضافة المنتج';$('cancelEdit').style.display='none';await loadStore();msg(savedWithoutGallery?'تم حفظ المنتج بالصورة الرئيسية فقط؛ قاعدة البيانات لا تدعم معرض الصور حالياً.':'تم حفظ المنتج')}
+function cancelEdit(){$('pname').value='';$('pprice').value='';$('psaleprice').value='';$('pdesc').value='';$('pavailability').value='true';$('pimages').value='';selectedProductPhotos=[];existingProductImages=[];$('photoPreview').innerHTML='';editingId=null;$('productSave').textContent='إضافة المنتج';$('cancelEdit').style.display='none';}
+function editProduct(id){let p=products.find(x=>x.id===id);if(!p)return;editingId=id;selectedProductPhotos=[];$('pimages').value='';existingProductImages=getProductImages(p);drawPhotoPreview();$('pname').value=p.name;$('pprice').value=p.price;$('psaleprice').value=p.sale_price??'';$('pdesc').value=p.description||'';$('pavailability').value=isProductAvailable(p)?'true':'false';$('pcat').value=p.category_id;$('productSave').textContent='حفظ التعديل';$('cancelEdit').style.display='inline-block';window.scrollTo({top:document.getElementById('admin').offsetTop,behavior:'smooth'})}
+async function removeProduct(id){if(!confirm('حذف المنتج؟'))return;let {error}=await db.from('products').delete().eq('id',id);if(error)return msg(error.message);await loadStore()}
+async function addCategory(){let name=$('newcat').value.trim();if(!name)return;let {error}=await db.from('categories').insert({name,sort_order:cats.length,is_active:true});if(error)return msg(error.message);$('newcat').value='';await loadStore()}
+async function renameCategory(id){const c=cats.find(x=>String(x.id)===String(id));if(!c)return;const name=prompt('اكتب اسم القسم الجديد',c.name);if(name===null||!name.trim())return;const {error}=await db.from('categories').update({name:name.trim()}).eq('id',id);if(error)return msg(error.message);await loadStore();msg('تم تعديل اسم القسم')}
+async function moveCategory(id,delta){const i=cats.findIndex(x=>String(x.id)===String(id)),j=i+delta;if(i<0||j<0||j>=cats.length)return;const a=cats[i],b=cats[j];const {error:e1}=await db.from('categories').update({sort_order:Number(b.sort_order??j)}).eq('id',a.id);if(e1)return msg(e1.message);const {error:e2}=await db.from('categories').update({sort_order:Number(a.sort_order??i)}).eq('id',b.id);if(e2)return msg(e2.message);await loadStore();msg('تم تغيير ترتيب الأقسام')}
+async function delCat(id){if(!confirm('حذف القسم؟ المنتجات المرتبطة به قد تتأثر.'))return;let {error}=await db.from('categories').delete().eq('id',id);if(error)return msg(error.message);await loadStore()}
+async function saveSettings(){let payload={store_name:$('storeName').value.trim()||'Arte Net Store',whatsapp_number:$('wa').value.trim().replace(/\D/g,''),vodafone_cash:$('vodafone').value.trim(),instapay:$('instapay').value.trim()};let {data,error}=await db.from('store_settings').select('id').limit(1).maybeSingle();if(error)return msg(error.message);let r=data?await db.from('store_settings').update(payload).eq('id',data.id):await db.from('store_settings').insert({id:1,...payload});if(r.error)return msg('تعذر حفظ الإعدادات: '+r.error.message);await loadStore();msg('تم حفظ الإعدادات')}
+function showAdminTab(tab,button){document.querySelectorAll('.admin-section').forEach(el=>el.classList.add('hidden'));const target=$('adminTab-'+tab);if(target)target.classList.remove('hidden');document.querySelectorAll('.admin-tab').forEach(el=>el.classList.remove('active'));if(button)button.classList.add('active');if(tab==='orders')loadOrders();if(tab==='repairs')loadRepairRequests();}
+async function renderAdmin(){if(!$('adminProducts'))return;$('adminProducts').className='admin-product-grid';$('adminProducts').innerHTML=products.map(p=>{const image=getProductImages(p)[0]||'';return `<article class="admin-product-card">${image?`<img class="admin-product-image" src="${esc(image)}" alt="${esc(p.name)}">`:'<div class="admin-product-image"></div>'}<div class="admin-product-info"><div class="admin-product-name">${esc(p.name)}</div><div class="admin-product-price">${money(effectivePrice(p))}</div><div class="admin-product-meta">${discountPercent(p)?`خصم ${discountPercent(p)}% · قبل الخصم ${money(p.price)}<br>`:''}${isProductAvailable(p)?'متوفر':'غير متوفر'} · ${esc(cats.find(c=>String(c.id)===String(p.category_id))?.name||'بدون قسم')}</div><div class="admin-product-actions"><button class="secondary" onclick="editProduct(${p.id})">تعديل</button><button class="danger" onclick="removeProduct(${p.id})">حذف</button></div></div></article>`}).join('')||'<p class="muted">لا توجد منتجات حتى الآن</p>';$('catAdmin').innerHTML=cats.map((c,i)=>`<div class="row" style="padding:8px;border-bottom:1px solid #333"><b>${esc(c.name)}</b><span><button class="secondary" onclick="renameCategory(${c.id})">✎ تعديل الاسم</button><button class="secondary" onclick="moveCategory(${c.id},-1)" ${i===0?'disabled':''}>↑</button><button class="secondary" onclick="moveCategory(${c.id},1)" ${i===cats.length-1?'disabled':''}>↓</button><button class="danger" onclick="delCat(${c.id})">حذف</button></span></div>`).join('');if(settings.store_name)$('storeName').value=settings.store_name;fillCustomizationForm()}
+async function loadOrders(){
+ const {data,error}=await db.from('orders').select('*').order('created_at',{ascending:false});
+ if(error){$('ordersList').textContent=error.message;return}
+ const orders=data||[];
+ const labels={new:'جديد',processing:'قيد التجهيز',shipped:'تم الشحن',completed:'مكتمل',cancelled:'ملغي'};
+ const options=[['new','جديد'],['processing','قيد التجهيز'],['shipped','تم الشحن'],['completed','مكتمل'],['cancelled','ملغي']];
+ $('ordersList').innerHTML=`<div class="row" style="justify-content:flex-start;margin:10px 0 14px"><strong>إجمالي الطلبات:</strong><span class="badge" style="display:inline-block;padding:6px 12px;border-radius:20px;background:#263b35;color:#9be3bd;font-weight:700">${orders.length}</span></div>`+(orders.map((o,index)=>{
+  const st=o.status||'new';
+  return `<div class="panel order-card"><div class="order-heading"><b>طلب رقم ${index+1}</b><strong class="order-price">${money(o.total_amount??o.total)}</strong></div><div class="order-details"><p>العميل: ${esc(o.customer_name||'—')}</p><p>الهاتف: ${esc(o.phone||o.customer_phone||'—')}</p><p>الدفع: ${esc(o.payment_method||'—')}</p><p>الحالة: <span class="order-status">${esc(labels[st]||st)}</span></p></div><div class="order-actions"><select class="field order-status-select" id="status${esc(o.id)}">${options.map(([v,l])=>`<option value="${v}" ${st===v?'selected':''}>${l}</option>`).join('')}</select><button class="order-save" onclick="updateOrder(${JSON.stringify(o.id)})">حفظ الحالة</button><button class="danger order-delete" onclick="deleteOrder(${JSON.stringify(o.id)})">حذف</button></div></div>`;
+ }).join('')||'<p class="muted">لا توجد طلبات حتى الآن</p>');
+}
+
+async function loadRepairRequests(){const box=$('repairRequestsList');if(!box)return;if(!adminUser){box.innerHTML='<p class="muted">سجل دخول المدير لعرض الطلبات.</p>';return;}box.innerHTML='<p class="muted">جاري تحميل طلبات الصيانة...</p>';const {data,error}=await db.from('repair_requests').select('*').order('created_at',{ascending:false});if(error){box.innerHTML='<p class="muted">تعذر تحميل طلبات الصيانة: '+esc(error.message)+'</p>';return;}const requests=data||[];const labels={new:'جديد',processing:'قيد المراجعة',completed:'تمت الصيانة',cancelled:'ملغي'};const options=[['new','جديد'],['processing','قيد المراجعة'],['completed','تمت الصيانة'],['cancelled','ملغي']];box.innerHTML=`<div class="row" style="justify-content:flex-start;margin:10px 0 14px"><strong>إجمالي طلبات الصيانة:</strong><span class="badge" style="display:inline-block;padding:6px 12px;border-radius:20px;background:#263b35;color:#9be3bd;font-weight:700">${requests.length}</span></div>`+(requests.map((r,index)=>{const st=r.status||'new';return `<div class="panel order-card"><div class="order-heading"><b>طلب صيانة رقم ${index+1}</b><small>${r.created_at?new Date(r.created_at).toLocaleString('ar-EG'):''}</small></div><div class="order-details"><p>العميل: ${esc(r.customer_name||'—')}</p><p>الهاتف: ${esc(r.phone||'—')}</p><p>نوع الطلب: ${esc(r.request_type||'—')}</p><p>نوع الموبايل: ${esc(r.device_model||'لم يحدد')}</p><p>التفاصيل: ${esc(r.details||'—')}</p><p>الحالة: <span class="order-status">${esc(labels[st]||st)}</span></p></div><div class="order-actions"><select class="field order-status-select" id="repairStatus${esc(r.id)}">${options.map(([v,l])=>`<option value="${v}" ${st===v?'selected':''}>${l}</option>`).join('')}</select><button class="order-save" onclick="updateRepairRequest(${JSON.stringify(r.id)})">حفظ الحالة</button><button class="danger order-delete" onclick="deleteRepairRequest(${JSON.stringify(r.id)})">حذف</button></div></div>`}).join('')||'<p class="muted">لا توجد طلبات صيانة حتى الآن</p>');}
+async function updateRepairRequest(id){const status=$('repairStatus'+id)?.value;if(!status)return;const {error}=await db.from('repair_requests').update({status}).eq('id',id);if(error)return msg('تعذر تحديث حالة طلب الصيانة: '+error.message);msg('تم تحديث حالة طلب الصيانة');await loadRepairRequests();}
+async function deleteRepairRequest(id){if(!confirm('هل أنت متأكد من حذف طلب الصيانة؟'))return;const {error}=await db.from('repair_requests').delete().eq('id',id);if(error)return msg('تعذر حذف طلب الصيانة: '+error.message);msg('تم حذف طلب الصيانة');await loadRepairRequests();}
+
+async function deleteOrder(id){if(!adminUser)return msg('سجل دخول المدير أولاً');if(!confirm('هل أنت متأكد من حذف الطلب رقم '+id+'؟ لا يمكن التراجع عن الحذف.'))return;const {error}=await db.rpc('delete_store_order',{p_order_id:id});if(error){console.error('Order deletion failed:',error);return msg('تعذر حذف الطلب: '+error.message)}msg('تم حذف الطلب بنجاح');await loadOrders()}
+async function updateOrder(id){let {error}=await db.from('orders').update({status:$('status'+id).value}).eq('id',id);if(error)return msg(error.message);msg('تم تحديث الطلب');loadOrders()}
+
+$('admin').insertAdjacentHTML('afterbegin','<div class="modal" id="adminLogin"><div class="dialog"><h3>دخول الإدارة</h3><input class="field" id="adminEmail" type="email" placeholder="البريد الإلكتروني"><input class="field" id="adminPassword" type="password" placeholder="كلمة المرور"><button onclick="adminLogin()">دخول</button><button class="secondary" onclick="$(\'adminLogin\').classList.remove(\'show\');$(\'admin\').classList.remove(\'show\')">إغلاق</button></div></div>');
+$('admin').querySelector('.panel').insertAdjacentHTML('afterend','');
+$('admin').querySelector('h3')?.insertAdjacentHTML('beforebegin','');
+// Extend existing product form without changing the approved visual theme.
+let firstPanel=[...document.querySelectorAll('#admin .panel')].find(p=>p.querySelector('h3')?.textContent.includes('إضافة منتج'));if(firstPanel){firstPanel.insertAdjacentHTML('beforeend','<div class="product-photo-field"><label for="pimages">صور المنتج (يمكن اختيار أكثر من صورة)</label><input class="field" id="pimages" type="file" accept="image/png,image/jpeg,image/webp" multiple onchange="previewProductPhotos()"><div id="photoPreview" class="photo-preview"></div><button type="button" class="ai-description-button" id="aiDescriptionButton" onclick="generateProductDescription()">✨ وصف المنتج بالذكاء الاصطناعي</button><small class="muted" style="display:block;margin:6px 0 10px">اختياري: أنشئ وصفًا من الصور ثم عدّله قبل الحفظ، أو اكتب وصفك يدويًا.</small></div><button id="productSave" onclick="addProduct()">إضافة المنتج</button><button type="button" class="secondary" id="cancelEdit" onclick="cancelEdit()" style="display:none">إلغاء التعديل</button>');}
+const photoAdminField=document.querySelector('#adminTab-products .product-photo-field');
+const productDescription=$('pdesc');
+if(photoAdminField&&productDescription){
+  const descriptionLabel=document.createElement('label');
+  descriptionLabel.className='ai-description-label';
+  descriptionLabel.htmlFor='pdesc';
+  descriptionLabel.textContent='الوصف المختصر للمنتج (يمكنك تعديله يدويًا)';
+  const aiButton=$('aiDescriptionButton');
+  const aiHelp=photoAdminField.querySelector('small');
+  if(aiHelp){aiHelp.className='muted ai-description-help';aiHelp.textContent='اختياري: اكتب الوصف بنفسك أو اضغط الزر لتوليده من الصور.';}
+  aiButton.textContent='✨ وصف المنتج بالذكاء الاصطناعي';
+  photoAdminField.insertAdjacentElement('afterend',descriptionLabel);
+  descriptionLabel.insertAdjacentElement('afterend',productDescription);
+  productDescription.insertAdjacentElement('afterend',aiHelp);
+  aiHelp.insertAdjacentElement('afterend',aiButton);
+}
+
+[...document.querySelectorAll('#admin .panel')].find(p=>p.querySelector('h3')?.textContent.includes('بيانات التواصل والدفع'))?.insertAdjacentHTML('afterbegin','<label>اسم المتجر</label><input class="field" id="storeName" placeholder="Arte Net Store">');
+async function initializeAdminPortal(){
+ if(!ADMIN_PORTAL)return;
+ document.body.classList.add('admin-portal');
+ $('store').classList.add('hidden');
+ $('admin').classList.add('show');
+ $('adminLogin').classList.add('show');
+ const {data,error}=await db.auth.getSession();
+ if(error){console.error('Admin portal session check failed:',error);msg('تعذر التحقق من جلسة المدير');return;}
+ const user=data?.session?.user;
+ if(user){
+   const ok=await verifyAdminUser(user);
+   if(ok){
+     $('adminLogin').classList.remove('show');
+     $('admin').classList.add('show');
+     renderAdmin();
+     await loadOrders();
+   }else{
+     await db.auth.signOut();
+     $('adminLogin').classList.add('show');
+   }
+ }
+}
+db.auth.onAuthStateChange((_event, session)=>{
+ if(!session){
+   adminUser=null;
+   if(ADMIN_PORTAL){$('store').classList.add('hidden');$('admin').classList.add('show');$('adminLogin').classList.add('show');}
+   else{$('admin').classList.remove('show');$('store').classList.remove('hidden');}
+ }else if(!adminUser){
+   queueMicrotask(async()=>{
+     const ok=await verifyAdminUser(session.user);
+     if(ok&&ADMIN_PORTAL){$('adminLogin').classList.remove('show');$('store').classList.add('hidden');$('admin').classList.add('show');renderAdmin();await loadOrders();}
+   });
+ }
+});
+if(ADMIN_PORTAL){initializeAdminPortal().catch(e=>{console.error(e);msg('تعذر فتح لوحة الإدارة: '+e.message);});}
+else{restoreAdminSession().catch(e=>console.error(e));}
+loadStore().catch(e=>{console.error('Store initialization failed:',e);const grid=$('productGrid');if(grid)grid.innerHTML='<p class="muted">تعذر إكمال تحميل المتجر: '+esc(e?.message||String(e))+'</p><button class="secondary" onclick="loadStore().catch(e=>msg(e.message))">إعادة المحاولة</button>';msg('تعذر إكمال تحميل المتجر: '+(e?.message||'خطأ غير معروف'));});
+</script></body></html>
